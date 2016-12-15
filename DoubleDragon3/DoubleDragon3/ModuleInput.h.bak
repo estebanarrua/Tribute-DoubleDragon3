@@ -1,0 +1,27 @@
+#ifndef __MODULEINPUT_H__
+#define __MODULEINPUT_H__
+
+#include "Module.h"
+#include "Globals.h"
+
+typedef unsigned __int8 Uint8;
+
+class ModuleInput : public Module
+{
+public:
+	
+	ModuleInput();
+	~ModuleInput();
+
+	bool Init();
+	bool Start();
+
+	// Called each loop iteration
+	update_status PreUpdate();
+	// Called before quitting
+	bool CleanUp();
+
+private:
+	const Uint8 *keyboard = NULL;
+};
+#endif // __MODULEINPUT_H__

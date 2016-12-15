@@ -9,10 +9,6 @@ class ModuleRender;
 class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
-class ModuleAudio;
-class ModuleFadeToBlack;
-class ModulePlayer;
-class ModuleSceneKen;
 
 class Application
 {
@@ -30,10 +26,6 @@ public:
 	ModuleWindow* window;
 	ModuleTextures* textures;
 	ModuleInput* input;
-	ModuleAudio* audio;
-	ModuleFadeToBlack* fade;
-	ModulePlayer* player;
-	ModuleSceneKen* scene_ken;
 
 private:
 

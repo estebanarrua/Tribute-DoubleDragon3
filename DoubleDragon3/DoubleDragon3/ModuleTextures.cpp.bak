@@ -38,6 +38,11 @@ bool ModuleTextures::Init()
 	return ret;
 }
 
+bool ModuleTextures::Start()
+{
+	return false;
+}
+
 // Called before quitting
 bool ModuleTextures::CleanUp()
 {
@@ -77,18 +82,4 @@ SDL_Texture* const ModuleTextures::Load(const char* path)
 	}
 
 	return texture;
-}
-
-// Free texture from memory
-void ModuleTextures::Unload(SDL_Texture* texture)
-{
-	for(list<SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); ++it)
-	{
-		if(*it == texture)
-		{
-			SDL_DestroyTexture(*it);
-			textures.erase(it);
-			break;
-		}
-	}
 }
