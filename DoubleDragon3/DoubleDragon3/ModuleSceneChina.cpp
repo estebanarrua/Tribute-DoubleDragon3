@@ -33,7 +33,7 @@ bool ModuleSceneChina::Start()
 	LOG("Loading China scene");
 	graphics = App->textures->Load("Sprites/china_scene.png");
 
-	App->audio->PlayMusic("Music/03-in-china.ogg");
+	//App->audio->PlayMusic("Music/03-in-china.ogg");
 
 	return true;
 }

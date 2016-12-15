@@ -22,7 +22,7 @@ Application::Application()
 
 	// Game Modules
 	modules.push_back(scene_china = new ModuleSceneChina(true));
-	modules.push_back(player = new ModulePlayer(false));
+	modules.push_back(player = new ModulePlayer(true));
 	modules.push_back(fade = new ModuleFadeToBlack());
 }
 
