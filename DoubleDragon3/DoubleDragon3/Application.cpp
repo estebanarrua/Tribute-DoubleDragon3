@@ -5,7 +5,7 @@
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
-#include "ModuleSceneKen.h"
+#include "ModuleSceneChina.h"
 #include "ModulePlayer.h"
 
 using namespace std;
@@ -21,7 +21,7 @@ Application::Application()
 	modules.push_back(audio = new ModuleAudio());
 
 	// Game Modules
-	modules.push_back(scene_ken = new ModuleSceneKen(false));
+	modules.push_back(scene_china = new ModuleSceneChina(true));
 	modules.push_back(player = new ModulePlayer(false));
 	modules.push_back(fade = new ModuleFadeToBlack());
 }
@@ -46,7 +46,7 @@ bool Application::Init()
 	}
 
 	// Start the first scene --
-	fade->FadeToBlack(scene_ken, nullptr, 3.0f);
+	fade->FadeToBlack(scene_china, nullptr, 3.0f);
 
 	return ret;
 }

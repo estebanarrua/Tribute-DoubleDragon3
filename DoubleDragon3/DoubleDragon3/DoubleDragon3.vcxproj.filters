@@ -45,15 +45,12 @@
     <ClCompile Include="ModulePlayer.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleSceneKen.cpp">
+    <ClCompile Include="ModuleSceneChina.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Dummy.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Module.h">
@@ -86,7 +83,7 @@
     <ClInclude Include="ModulePlayer.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleSceneKen.h">
+    <ClInclude Include="ModuleSceneChina.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
