@@ -12,6 +12,9 @@ using namespace std;
 
 Application::Application()
 {
+	//Init config
+	configObj = GET_CONFIG("config.json");
+
 	// Order matters: they will init/start/pre/update/post in this order
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(window = new ModuleWindow());

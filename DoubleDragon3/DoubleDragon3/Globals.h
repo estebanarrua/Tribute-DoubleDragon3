@@ -2,6 +2,7 @@
 #define __GLOBALS_H__
 
 #include "SDL/include/SDL_rect.h"
+#include "ConfigParson.h"
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 
@@ -40,6 +41,6 @@ enum update_status
 #define SCREEN_SIZE 2
 #define FULLSCREEN false
 #define VSYNC true
-#define TITLE "Double Dragon 3: The Rosetta Stone"
+#define TITLE ""
 
 #endif //__GLOBALS_H__

@@ -16,16 +16,13 @@ class ModuleSceneChina;
 
 class Application
 {
-public:
 
-	Application();
-	~Application();
+private:
 
-	bool Init();
-	update_status Update();
-	bool CleanUp();
+	std::list<Module*> modules;
 
 public:
+	CONFIG_OBJECT configObj;
 	ModuleRender* renderer;
 	ModuleWindow* window;
 	ModuleTextures* textures;
@@ -35,10 +32,14 @@ public:
 	ModulePlayer* player;
 	ModuleSceneChina* scene_china;
 
-private:
+public:
 
-	std::list<Module*> modules;
+	Application();
+	~Application();
 
+	bool Init();
+	update_status Update();
+	bool CleanUp();
 };
 
 extern Application* App;

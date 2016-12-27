@@ -92,8 +92,13 @@
     <ClInclude Include="parson.h">
       <Filter>Archivos de recursos</Filter>
     </ClInclude>
-    <ClInclude Include="JSONParson.h">
+    <ClInclude Include="ConfigParson.h">
       <Filter>Archivos de recursos</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config.json">
+      <Filter>Archivos de recursos</Filter>
+    </None>
   </ItemGroup>
 </Project>
