@@ -16,17 +16,17 @@ Application::Application()
 	configObj = GET_CONFIG("config.json");
 
 	// Order matters: they will init/start/pre/update/post in this order
-	modules.push_back(input = new ModuleInput());
-	modules.push_back(window = new ModuleWindow());
+	modules.push_back(input = new ModuleInput(CONFIG_OBJECT_OBJECT(configObj, "input")));
+	modules.push_back(window = new ModuleWindow(CONFIG_OBJECT_OBJECT(configObj, "window")));
 
-	modules.push_back(renderer = new ModuleRender());
-	modules.push_back(textures = new ModuleTextures());
-	modules.push_back(audio = new ModuleAudio());
+	modules.push_back(renderer = new ModuleRender(CONFIG_OBJECT_OBJECT(configObj, "render")));
+	modules.push_back(textures = new ModuleTextures(CONFIG_OBJECT_OBJECT(configObj, "textures")));
+	modules.push_back(audio = new ModuleAudio(CONFIG_OBJECT_OBJECT(configObj, "audio")));
 
 	// Game Modules
-	modules.push_back(scene_china = new ModuleSceneChina(true));
-	modules.push_back(player = new ModulePlayer(true));
-	modules.push_back(fade = new ModuleFadeToBlack());
+	modules.push_back(scene_china = new ModuleSceneChina(CONFIG_OBJECT_OBJECT(configObj, "sceneChina"), true));
+	modules.push_back(player = new ModulePlayer(CONFIG_OBJECT_OBJECT(configObj, "player"), true));
+	modules.push_back(fade = new ModuleFadeToBlack(CONFIG_OBJECT_OBJECT(configObj, "fadeToBlack")));
 }
 
 Application::~Application()

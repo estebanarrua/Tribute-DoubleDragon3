@@ -11,7 +11,7 @@ struct SDL_Texture;
 class ModulePlayer : public Module
 {
 public:
-	ModulePlayer(bool start_enabled = true);
+	ModulePlayer(CONFIG_OBJECT config, bool start_enabled = true);
 	~ModulePlayer();
 
 	bool Start();

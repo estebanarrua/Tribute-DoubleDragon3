@@ -11,7 +11,7 @@
 
 
 
-ModuleSceneChina::ModuleSceneChina(bool start_enabled) : Module(start_enabled)
+ModuleSceneChina::ModuleSceneChina(CONFIG_OBJECT config, bool start_enabled) : Module(config, start_enabled)
 {
 	background.x = 8;
 	background.y = 8;

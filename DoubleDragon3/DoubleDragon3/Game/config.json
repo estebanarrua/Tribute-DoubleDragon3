@@ -1,6 +1,24 @@
 {
-  "title": "Double Dragon 3: The Rosetta Stone",
-  "screen_size": [ 384, 224 ],
-  "fullscreen": false,
-  "vsync": true
+  "input": {
+    "sreen_size": 2
+  },
+  "window": {
+    "title": "Double Dragon 3: The Rosetta Stone",
+    "screen_size": [ 384, 224, 2 ],
+    "fullscreen": false
+  },
+  "render": {
+    "screen_size": [ 384, 224, 2 ],
+    "vsync": true
+  },
+  "textures": {
+  },
+  "audio": {
+  },
+  "sceneChina": {
+  },
+  "player": {
+  },
+  "fadeToBlack": {
+  }
 }

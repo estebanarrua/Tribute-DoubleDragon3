@@ -14,7 +14,7 @@ class ModuleAudio : public Module
 {
 public:
 
-	ModuleAudio(bool start_enabled = true);
+	ModuleAudio(CONFIG_OBJECT config, bool start_enabled = true);
 	~ModuleAudio();
 
 	bool Init();

@@ -5,7 +5,7 @@
 #include "ModuleRender.h"
 #include "SDL/include/SDL.h"
 
-ModuleFadeToBlack::ModuleFadeToBlack(bool start_enabled) :  Module(start_enabled)
+ModuleFadeToBlack::ModuleFadeToBlack(CONFIG_OBJECT config, bool start_enabled) :  Module(config, start_enabled)
 {}
 
 ModuleFadeToBlack::~ModuleFadeToBlack()

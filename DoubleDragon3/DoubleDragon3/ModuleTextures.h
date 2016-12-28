@@ -10,7 +10,7 @@ struct SDL_Texture;
 class ModuleTextures : public Module
 {
 public:
-	ModuleTextures();
+	ModuleTextures(CONFIG_OBJECT config);
 	~ModuleTextures();
 
 	bool Init();

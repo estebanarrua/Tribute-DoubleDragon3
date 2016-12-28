@@ -6,8 +6,7 @@
 #include "ModuleTextures.h"
 #include "SDL/include/SDL.h"
 
-// Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
-ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
+ModulePlayer::ModulePlayer(CONFIG_OBJECT config, bool start_enabled) : Module(config, start_enabled)
 {
 	position.x = 116;
 	position.y = 128;

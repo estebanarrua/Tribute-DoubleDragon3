@@ -3,8 +3,15 @@
 #include "ModuleWindow.h"
 #include "SDL/include/SDL.h"
 
-ModuleWindow::ModuleWindow()
+ModuleWindow::ModuleWindow(CONFIG_OBJECT config) : Module(config)
 {
+	title = CONFIG_OBJECT_STRING(config, "title");
+	CONFIG_ARRAY arraySize = CONFIG_OBJECT_ARRAY(config, "screen_size");
+
+	screenWidth = (int) (CONFIG_ARRAY_NUMBER(arraySize, 0));
+	screenHeight = (int)(CONFIG_ARRAY_NUMBER(arraySize, 1));
+	screenSize = (int)(CONFIG_ARRAY_NUMBER(arraySize, 2));
+	fullScreen = CONFIG_OBJECT_BOOL(config, "fullscreen") != 0;
 }
 
 // Destructor
@@ -26,16 +33,16 @@ bool ModuleWindow::Init()
 	else
 	{
 		//Create window
-		int width = SCREEN_WIDTH * SCREEN_SIZE;
-		int height = SCREEN_HEIGHT * SCREEN_SIZE;
+		int width = this->screenWidth * this->screenSize;
+		int height = this->screenHeight * this->screenSize;
 		Uint32 flags = SDL_WINDOW_SHOWN;
 
-		if(FULLSCREEN == true)
+		if(this->fullScreen == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
-		window = SDL_CreateWindow(CONFIG_STRING(App->configObj, "title"), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+		window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
 		if(window == nullptr)
 		{

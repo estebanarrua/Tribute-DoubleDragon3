@@ -97,7 +97,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="config.json">
+    <None Include="Game\config.json">
       <Filter>Archivos de recursos</Filter>
     </None>
   </ItemGroup>

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-ModuleTextures::ModuleTextures()
+ModuleTextures::ModuleTextures(CONFIG_OBJECT config) : Module(config)
 {
 }
 

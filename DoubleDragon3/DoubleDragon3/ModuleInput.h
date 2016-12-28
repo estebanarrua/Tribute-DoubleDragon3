@@ -26,10 +26,17 @@ enum KeyState
 
 class ModuleInput : public Module
 {
+private:
+	bool		windowEvents[WE_COUNT];
+	KeyState*	keyboard;
+	KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
+	iPoint mouse_motion;
+	iPoint mouse;
+	int screenSize = 0;
 
 public:
 
-	ModuleInput();
+	ModuleInput(CONFIG_OBJECT config);
 
 	// Destructor
 	virtual ~ModuleInput();
@@ -64,12 +71,6 @@ public:
 	const iPoint& GetMouseMotion() const;
 	const iPoint& GetMousePosition() const;
 
-private:
-	bool		windowEvents[WE_COUNT];
-	KeyState*	keyboard;
-	KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
-	iPoint mouse_motion;
-	iPoint mouse;
 };
 
 #endif // __MODULEINPUT_H__

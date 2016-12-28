@@ -8,7 +8,7 @@
 
 using namespace std;
 
-ModuleAudio::ModuleAudio( bool start_enabled) : Module( start_enabled)
+ModuleAudio::ModuleAudio(CONFIG_OBJECT config, bool start_enabled) : Module(config, start_enabled)
 {}
 
 // Destructor

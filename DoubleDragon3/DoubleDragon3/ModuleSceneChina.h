@@ -10,7 +10,7 @@ class ModuleSceneChina :
 	public Module
 {
 public:
-	ModuleSceneChina( bool start_enabled = true);
+	ModuleSceneChina(CONFIG_OBJECT config, bool start_enabled = true);
 	~ModuleSceneChina();
 
 	bool Start();

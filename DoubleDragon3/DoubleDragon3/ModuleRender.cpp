@@ -5,11 +5,18 @@
 #include "ModuleInput.h"
 #include "SDL/include/SDL.h"
 
-ModuleRender::ModuleRender()
+ModuleRender::ModuleRender(CONFIG_OBJECT config) : Module(config)
 {
+	CONFIG_ARRAY arraySize = CONFIG_OBJECT_ARRAY(config, "screen_size");
+
+	screenWidth = (int)(CONFIG_ARRAY_NUMBER(arraySize, 0));
+	screenHeight = (int)(CONFIG_ARRAY_NUMBER(arraySize, 1));
+	screenSize = (int)(CONFIG_ARRAY_NUMBER(arraySize, 2));
+	vsync = CONFIG_OBJECT_BOOL(config, "vsync") != 0;
+	
 	camera.x = camera.y = 0;
-	camera.w = SCREEN_WIDTH * SCREEN_SIZE;
-	camera.h = SCREEN_HEIGHT* SCREEN_SIZE;
+	camera.w = screenWidth * screenSize;
+	camera.h = screenHeight * screenSize;
 }
 
 // Destructor
@@ -23,7 +30,7 @@ bool ModuleRender::Init()
 	bool ret = true;
 	Uint32 flags = 0;
 
-	if(VSYNC == true)
+	if(vsync == true)
 	{
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 	}
@@ -92,8 +99,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 {
 	bool ret = true;
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * SCREEN_SIZE;
-	rect.y = (int)(camera.y * speed) + y * SCREEN_SIZE;
+	rect.x = (int)(camera.x * speed) + x * screenSize;
+	rect.y = (int)(camera.y * speed) + y * screenSize;
 
 	if(section != NULL)
 	{
@@ -105,8 +112,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
 
-	rect.w *= SCREEN_SIZE;
-	rect.h *= SCREEN_SIZE;
+	rect.w *= screenSize;
+	rect.h *= screenSize;
 
 	if(SDL_RenderCopy(renderer, texture, section, &rect) != 0)
 	{

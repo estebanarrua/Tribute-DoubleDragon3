@@ -7,7 +7,7 @@
 class ModuleFadeToBlack : public Module
 {
 public:
-	ModuleFadeToBlack(bool start_enabled = true);
+	ModuleFadeToBlack(CONFIG_OBJECT config, bool start_enabled = true);
 	~ModuleFadeToBlack();
 
 	bool Start();

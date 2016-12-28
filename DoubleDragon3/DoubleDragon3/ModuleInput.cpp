@@ -5,8 +5,10 @@
 
 #define MAX_KEYS 300
 
-ModuleInput::ModuleInput() : Module(), mouse({0, 0}), mouse_motion({0,0})
+ModuleInput::ModuleInput(CONFIG_OBJECT config) : Module(config), mouse({0, 0}), mouse_motion({0,0})
 {
+	screenSize = (int)(CONFIG_OBJECT_NUMBER(config, "screen_size"));
+
 	keyboard = new KeyState[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(KeyState) * NUM_MOUSE_BUTTONS);
@@ -114,10 +116,10 @@ update_status ModuleInput::PreUpdate()
 			break;
 
 			case SDL_MOUSEMOTION:
-				mouse_motion.x = event.motion.xrel / SCREEN_SIZE;
-				mouse_motion.y = event.motion.yrel / SCREEN_SIZE;
-				mouse.x = event.motion.x / SCREEN_SIZE;
-				mouse.y = event.motion.y / SCREEN_SIZE;
+				mouse_motion.x = event.motion.xrel / screenSize;
+				mouse_motion.y = event.motion.yrel / screenSize;
+				mouse.x = event.motion.x / screenSize;
+				mouse.y = event.motion.y / screenSize;
 			break;
 		}
 	}

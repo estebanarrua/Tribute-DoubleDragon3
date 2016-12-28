@@ -5,9 +5,14 @@ class Application;
 
 class Module
 {
+
+private:
+	bool active = true;
+	CONFIG_OBJECT config;
+
 public:
 
-	Module(bool active = true) : active(active)
+	Module(CONFIG_OBJECT config, bool active = true) : active(active), config(config)
 	{}
 
 	~Module()
@@ -64,8 +69,6 @@ public:
 		return true; 
 	}
 
-private:
-	bool active = true;
 };
 
 #endif // __MODULE_H__

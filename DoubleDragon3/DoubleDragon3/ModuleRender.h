@@ -10,8 +10,19 @@ struct SDL_Rect;
 
 class ModuleRender : public Module
 {
+
 public:
-	ModuleRender();
+	SDL_Renderer* renderer = nullptr;
+	SDL_Rect camera;
+
+	// Configuration -----------
+	int screenWidth = 0;
+	int screenHeight = 0;
+	int screenSize = 0;
+	bool vsync = false;
+	
+public:
+	ModuleRender(CONFIG_OBJECT config);
 	~ModuleRender();
 
 	bool Init();
@@ -22,9 +33,6 @@ public:
 
 	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed = 1.0f);
 
-public:
-	SDL_Renderer* renderer = nullptr;
-	SDL_Rect camera;
 };
 
 #endif // __MODULERENDER_H__
