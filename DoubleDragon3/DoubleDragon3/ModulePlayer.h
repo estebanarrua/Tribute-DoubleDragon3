@@ -11,6 +11,16 @@ struct SDL_Texture;
 class ModulePlayer : public Module
 {
 public:
+
+	SDL_Texture* graphics = nullptr;
+	Frame idle;
+	Animation forward;
+	Animation backward;
+	Animation up;
+	Animation down;
+	iPoint position;
+
+public:
 	ModulePlayer(CONFIG_OBJECT config, bool start_enabled = true);
 	~ModulePlayer();
 
@@ -18,15 +28,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-public:
 
-	SDL_Texture* graphics = nullptr;
-	SDL_Rect idle;
-	Animation forward;
-	Animation backward;
-	Animation up;
-	Animation down;
-	iPoint position;
 };
 
 #endif // __MODULEPLAYER_H__

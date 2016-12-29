@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -20,8 +21,8 @@ public:
 public:
 
 	SDL_Texture* graphics = nullptr;
-	SDL_Rect background;
-	SDL_Rect tree;
+	Frame background;
+	Frame tree;
 };
 
 #endif // __MODULESCENECHINA_H__

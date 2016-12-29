@@ -63,9 +63,7 @@
     <ClCompile Include="Application.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Classes\Source code files</Filter>
-    </ClCompile>
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -113,6 +111,10 @@
     <ClInclude Include="Entity.h">
       <Filter>Classes\Header files</Filter>
     </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Game\config.json">

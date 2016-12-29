@@ -12,25 +12,25 @@ ModulePlayer::ModulePlayer(CONFIG_OBJECT config, bool start_enabled) : Module(co
 	position.y = 128;
 
 	// idle (billy-jimmy sprite sheet)
-	idle.x = 8;
-	idle.y = 2;
-	idle.w = 27;
-	idle.h = 61;
+	idle.rect.x = 8;
+	idle.rect.y = 2;
+	idle.rect.w = 27;
+	idle.rect.h = 61;
 
 	// walk forward animation (billy-jimmy sprite sheet)
-	forward.frames.push_back({ 8, 2, 27, 61 });
-	forward.frames.push_back({ 48, 1, 25, 62 });
-	forward.frames.push_back({ 80, 1, 26, 61 });
-	forward.frames.push_back({ 112, 0, 26, 62 });
+	forward.frames.push_back({ 8, 2, 27, 61, false });
+	forward.frames.push_back({ 48, 1, 25, 62, false });
+	forward.frames.push_back({ 80, 1, 26, 61, false });
+	forward.frames.push_back({ 112, 0, 26, 62, false });
 	forward.speed = 0.2f;
 
 	// walk backward animation (billy-jimmy sprite sheet)
-	backward.frames.push_back({542, 131, 61, 87});
-	backward.frames.push_back({628, 129, 59, 90});
-	backward.frames.push_back({713, 128, 57, 90});
-	backward.frames.push_back({797, 127, 57, 90});
-	backward.frames.push_back({883, 128, 58, 91});
-	backward.frames.push_back({974, 129, 57, 89});
+	backward.frames.push_back({542, 131, 61, 87, false});
+	backward.frames.push_back({628, 129, 59, 90, false});
+	backward.frames.push_back({713, 128, 57, 90, false});
+	backward.frames.push_back({797, 127, 57, 90, false});
+	backward.frames.push_back({883, 128, 58, 91, false});
+	backward.frames.push_back({974, 129, 57, 89, false});
 	backward.speed = 0.1f;
 
 	// TODO 8: setup the walk forward animation from ryu4.png
@@ -64,7 +64,7 @@ bool ModulePlayer::CleanUp()
 // Update
 update_status ModulePlayer::Update()
 {
-	SDL_Rect draw = idle;
+	Frame draw = idle;
 
 	int speed = 3;
 

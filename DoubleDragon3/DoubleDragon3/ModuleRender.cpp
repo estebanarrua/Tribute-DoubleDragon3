@@ -1,4 +1,5 @@
 #include "Globals.h"
+#include "Animation.h"
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
@@ -95,7 +96,7 @@ bool ModuleRender::CleanUp()
 }
 
 // Blit to screen
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed)
+bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, Frame* section, float speed)
 {
 	bool ret = true;
 	SDL_Rect rect;
@@ -104,8 +105,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 
 	if(section != NULL)
 	{
-		rect.w = section->w;
-		rect.h = section->h;
+		rect.w = section->rect.w;
+		rect.h = section->rect.h;
 	}
 	else
 	{
@@ -115,7 +116,7 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	rect.w *= screenSize;
 	rect.h *= screenSize;
 
-	if(SDL_RenderCopy(renderer, texture, section, &rect) != 0)
+	if(SDL_RenderCopyEx(renderer,texture, &section->rect, &rect, 0, NULL, SDL_FLIP_NONE) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;

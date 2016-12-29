@@ -13,15 +13,17 @@
 
 ModuleSceneChina::ModuleSceneChina(CONFIG_OBJECT config, bool start_enabled) : Module(config, start_enabled)
 {
-	background.x = 8;
-	background.y = 8;
-	background.w = 1104;
-	background.h = 224;
+	background.rect.x = 8;
+	background.rect.y = 8;
+	background.rect.w = 1104;
+	background.rect.h = 224;
+	background.flip = false;
 
-	tree.x = 0;
-	tree.y = 0;
-	tree.w = 0;
-	tree.h = 0;
+	tree.rect.x = 0;
+	tree.rect.y = 0;
+	tree.rect.w = 0;
+	tree.rect.h = 0;
+	tree.flip = false;
 }
 
 ModuleSceneChina::~ModuleSceneChina()

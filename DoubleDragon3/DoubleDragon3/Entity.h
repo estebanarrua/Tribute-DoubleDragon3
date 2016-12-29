@@ -1,11 +1,57 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
+#include "Globals.h"
+#include "Point.h"
+
+struct SDL_Texture;
+
 class Entity
 {
+
+private:
+	CONFIG_OBJECT config;
+
 public:
-	Entity();
-	virtual ~Entity();
+	iPoint position;
+	SDL_Texture* graphics = nullptr;
+
+public:
+	Entity(CONFIG_OBJECT config) :config(config)
+	{}
+
+	virtual ~Entity()
+	{}
+
+	virtual bool Init()
+	{
+		return true;
+	}
+
+	virtual bool Start()
+	{
+		return true;
+	}
+
+	virtual update_status PreUpdate()
+	{
+		return UPDATE_CONTINUE;
+	}
+
+	virtual update_status Update()
+	{
+		return UPDATE_CONTINUE;
+	}
+
+	virtual update_status PostUpdate()
+	{
+		return UPDATE_CONTINUE;
+	}
+
+	virtual bool CleanUp()
+	{
+		return true;
+	}
 };
 
 #endif //ENTITY
