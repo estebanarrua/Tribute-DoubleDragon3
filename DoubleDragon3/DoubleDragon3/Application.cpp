@@ -7,6 +7,7 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneChina.h"
 #include "ModuleEntity.h"
+#include "ModuleTimer.h"
 
 using namespace std;
 
@@ -19,6 +20,7 @@ Application::Application()
 	modules.push_back(input = new ModuleInput(CONFIG_OBJECT_OBJECT(configObj, "input")));
 	modules.push_back(window = new ModuleWindow(CONFIG_OBJECT_OBJECT(configObj, "window")));
 
+	modules.push_back(timer = new ModuleTimer(CONFIG_OBJECT_OBJECT(configObj, "timer")));
 	modules.push_back(renderer = new ModuleRender(CONFIG_OBJECT_OBJECT(configObj, "render")));
 	modules.push_back(textures = new ModuleTextures(CONFIG_OBJECT_OBJECT(configObj, "textures")));
 	modules.push_back(audio = new ModuleAudio(CONFIG_OBJECT_OBJECT(configObj, "audio")));

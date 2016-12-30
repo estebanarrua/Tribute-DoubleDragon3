@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "Module.h"
 
+class ModuleTimer;
 class ModuleRender;
 class ModuleWindow;
 class ModuleTextures;
@@ -23,6 +24,7 @@ private:
 
 public:
 	CONFIG_OBJECT configObj;
+	ModuleTimer* timer;
 	ModuleRender* renderer;
 	ModuleWindow* window;
 	ModuleTextures* textures;

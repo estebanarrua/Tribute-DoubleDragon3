@@ -156,6 +156,7 @@
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleSceneChina.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
+    <ClCompile Include="ModuleTimer.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="parson.c" />
     <ClCompile Include="Player.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleSceneChina.h" />
     <ClInclude Include="ModuleTextures.h" />
+    <ClInclude Include="ModuleTimer.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="parson.h" />
     <ClInclude Include="Player.h" />

@@ -66,6 +66,9 @@
     <ClCompile Include="ModuleEntity.cpp">
       <Filter>Modules\Source code files</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleTimer.cpp">
+      <Filter>Modules\Source code files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -117,6 +120,9 @@
       <Filter>Classes\Header files</Filter>
     </ClInclude>
     <ClInclude Include="ModuleEntity.h">
+      <Filter>Modules\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTimer.h">
       <Filter>Modules\Header files</Filter>
     </ClInclude>
   </ItemGroup>

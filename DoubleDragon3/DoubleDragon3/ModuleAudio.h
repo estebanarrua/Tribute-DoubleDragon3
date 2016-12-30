@@ -12,6 +12,11 @@ typedef struct _Mix_Music Mix_Music;
 
 class ModuleAudio : public Module
 {
+private:
+
+	Mix_Music*	music = nullptr;
+	std::vector<Mix_Chunk*>	fx;
+
 public:
 
 	ModuleAudio(CONFIG_OBJECT config, bool start_enabled = true);
@@ -29,10 +34,6 @@ public:
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
-private:
-
-	Mix_Music*	music = nullptr;
-	std::vector<Mix_Chunk*>	fx;
 };
 
 #endif // __MODULEAUDIO_H__
