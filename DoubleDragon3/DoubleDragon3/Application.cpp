@@ -6,7 +6,6 @@
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneChina.h"
-#include "ModulePlayer.h"
 #include "ModuleEntity.h"
 
 using namespace std;
@@ -26,7 +25,6 @@ Application::Application()
 
 	// Game Modules
 	modules.push_back(scene_china = new ModuleSceneChina(CONFIG_OBJECT_OBJECT(configObj, "sceneChina"), true));
-	modules.push_back(player = new ModulePlayer(CONFIG_OBJECT_OBJECT(configObj, "player"), false));
 	modules.push_back(entitys = new ModuleEntity(CONFIG_OBJECT_OBJECT(configObj, "entitys"), true));
 	modules.push_back(fade = new ModuleFadeToBlack(CONFIG_OBJECT_OBJECT(configObj, "fadeToBlack")));
 }

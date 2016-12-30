@@ -36,9 +36,6 @@
     <ClCompile Include="ModuleInput.cpp">
       <Filter>Modules\Source code files</Filter>
     </ClCompile>
-    <ClCompile Include="ModulePlayer.cpp">
-      <Filter>Modules\Source code files</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleSceneChina.cpp">
       <Filter>Modules\Source code files</Filter>
     </ClCompile>
@@ -81,9 +78,6 @@
       <Filter>Modules\Header files</Filter>
     </ClInclude>
     <ClInclude Include="ModuleInput.h">
-      <Filter>Modules\Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="ModulePlayer.h">
       <Filter>Modules\Header files</Filter>
     </ClInclude>
     <ClInclude Include="ModuleRender.h">

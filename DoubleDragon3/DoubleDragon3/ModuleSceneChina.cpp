@@ -3,7 +3,6 @@
 #include "ModuleSceneChina.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
-#include "ModulePlayer.h"
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
@@ -51,7 +50,6 @@ bool ModuleSceneChina::CleanUp()
 {
 	LOG("Unloading China scene");
 	App->textures->Unload(graphics);
-	App->player->Disable();
 
 	return false;
 }

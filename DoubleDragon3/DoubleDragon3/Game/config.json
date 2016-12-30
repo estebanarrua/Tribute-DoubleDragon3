@@ -24,7 +24,7 @@
       "movements": [
         {
           "animations": [ [ 8, 2, 27, 61, false ] ],
-          "speed": 1.0
+          "speed": 0.0
         },
         {
           "animations": [
@@ -43,6 +43,10 @@
             [ 248, 2, 21, 61, false ]
           ],
           "speed": 0.2
+        },
+        {
+          "animations": [ [ 248, 95, 31, 48, false ] ],
+          "speed": 0.0
         }
       ]
     },

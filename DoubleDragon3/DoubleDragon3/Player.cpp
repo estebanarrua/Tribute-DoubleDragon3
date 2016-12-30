@@ -66,16 +66,26 @@ update_status Player::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		flip = true;
+		
 		position.x -= speed;
 		draw = movements[WALK].GetCurrentFrame();
+		if (!flip)
+			position.x += draw.rect.w;
+		flip = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-		flip = false;
 		position.x += speed;
 		draw = movements[WALK].GetCurrentFrame();
+		if (flip)
+			position.x -= draw.rect.w;
+		flip = false;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		draw = movements[JUMP].GetCurrentFrame();
 	}
 
 	draw.flip ^= flip;

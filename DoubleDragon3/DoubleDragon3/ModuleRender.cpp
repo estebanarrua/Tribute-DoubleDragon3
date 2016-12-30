@@ -117,6 +117,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, Frame* section, floa
 	rect.h *= screenSize;
 
 	SDL_RendererFlip flip = section->flip? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+	if (section->flip)
+		rect.x -= rect.w;
 
 	if(SDL_RenderCopyEx(renderer,texture, &section->rect, &rect, 0, NULL, flip) != 0)
 	{

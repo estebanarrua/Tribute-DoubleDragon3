@@ -11,7 +11,6 @@ class ModuleTextures;
 class ModuleInput;
 class ModuleAudio;
 class ModuleFadeToBlack;
-class ModulePlayer;
 class ModuleEntity;
 class ModuleSceneChina;
 
@@ -30,7 +29,6 @@ public:
 	ModuleInput* input;
 	ModuleAudio* audio;
 	ModuleFadeToBlack* fade;
-	ModulePlayer* player;
 	ModuleEntity* entitys;
 	ModuleSceneChina* scene_china;
 
