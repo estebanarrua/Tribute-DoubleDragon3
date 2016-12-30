@@ -12,10 +12,11 @@ class Entity
 public:
 	CONFIG_OBJECT config;
 	iPoint position;
+	bool flip; 
 	SDL_Texture* graphics = nullptr;
 
 public:
-	Entity(CONFIG_OBJECT config) :config(config)
+	Entity(CONFIG_OBJECT config, bool flip = false) : config(config), flip(flip)
 	{}
 
 	virtual ~Entity()

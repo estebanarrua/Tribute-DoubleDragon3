@@ -48,35 +48,39 @@ bool Player::Start()
 
 update_status Player::Update()
 {
-	Animation draw = movements[IDLE];
+	Frame draw = movements[IDLE].GetCurrentFrame();
 
-	int speed = 3;
+	static int speed = 3;
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		position.y -= speed;
-		draw = movements[WALK];
+		draw = movements[UP].GetCurrentFrame();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		position.y += speed;
-		draw = movements[WALK];
+		draw = movements[WALK].GetCurrentFrame();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
+		flip = true;
 		position.x -= speed;
-		draw = movements[WALK];
+		draw = movements[WALK].GetCurrentFrame();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
+		flip = false;
 		position.x += speed;
-		draw = movements[WALK];
+		draw = movements[WALK].GetCurrentFrame();
 	}
 
-	App->renderer->Blit(graphics, position.x, position.y, &(draw.GetCurrentFrame()), 1.0f);
+	draw.flip ^= flip;
+
+	App->renderer->Blit(graphics, position.x, position.y, &draw, 1.0f);
 
 	return UPDATE_CONTINUE;
 }

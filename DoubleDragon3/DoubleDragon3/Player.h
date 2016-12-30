@@ -8,6 +8,7 @@ enum movements
 {
 	IDLE,
 	WALK,
+	UP,
 	JUMP,
 	PUNCH,
 	KICK,
