@@ -16,12 +16,13 @@ ModulePlayer::ModulePlayer(CONFIG_OBJECT config, bool start_enabled) : Module(co
 	idle.rect.y = 2;
 	idle.rect.w = 27;
 	idle.rect.h = 61;
+	idle.flip = false;
 
 	// walk forward animation (billy-jimmy sprite sheet)
-	forward.frames.push_back({ 8, 2, 27, 61, false });
-	forward.frames.push_back({ 48, 1, 25, 62, false });
-	forward.frames.push_back({ 80, 1, 26, 61, false });
-	forward.frames.push_back({ 112, 0, 26, 62, false });
+	forward.frames.push_back({ 8, 2, 27, 61, true });
+	forward.frames.push_back({ 48, 1, 25, 62, true });
+	forward.frames.push_back({ 80, 1, 26, 61, true });
+	forward.frames.push_back({ 112, 0, 26, 62, true });
 	forward.speed = 0.2f;
 
 	// walk backward animation (billy-jimmy sprite sheet)

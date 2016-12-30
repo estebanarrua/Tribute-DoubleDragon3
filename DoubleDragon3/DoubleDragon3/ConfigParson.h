@@ -14,6 +14,10 @@
 #define CONFIG_OBJECT_NUMBER(o, s) json_object_get_number(o, s)
 #define CONFIG_OBJECT_BOOL(o, s) json_object_get_boolean(o, s)
 
+#define CONFIG_ARRAY_COUNT(a) json_array_get_count(a)
+#define CONFIG_ARRAY_OBJECT(a, i) json_array_get_object(a, i)
+#define CONFIG_ARRAY_ARRAY(a, i) json_array_get_array(a, i)
 #define CONFIG_ARRAY_NUMBER(a, i) json_array_get_number(a, i)
+#define CONFIG_ARRAY_BOOL(a, i) json_array_get_boolean(a, i)
 
 #endif //CONFIGPARSON

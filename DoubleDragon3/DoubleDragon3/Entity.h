@@ -9,10 +9,8 @@ struct SDL_Texture;
 class Entity
 {
 
-private:
-	CONFIG_OBJECT config;
-
 public:
+	CONFIG_OBJECT config;
 	iPoint position;
 	SDL_Texture* graphics = nullptr;
 
