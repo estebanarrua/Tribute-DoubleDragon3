@@ -66,6 +66,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Classes\Source code files</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleEntity.cpp">
+      <Filter>Modules\Source code files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Classes\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEntity.h">
+      <Filter>Modules\Header files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

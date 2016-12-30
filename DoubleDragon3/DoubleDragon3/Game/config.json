@@ -22,23 +22,19 @@
       "graphics": "Sprites/billy_jimmy.png",
       "position": [ 116, 128 ],
       "movements": [
-        [
-          {
-            "animations": [ [ 8, 2, 27, 61, false ] ],
-            "speed": 1.0
-          }
-        ],
-        [
-          {
-            "animations": [
-              [ 8, 2, 27, 61, true ],
-              [ 48, 1, 25, 62, true ],
-              [ 80, 1, 26, 61, true ],
-              [ 112, 0, 26, 62, true ]
-            ],
-            "speed": 0.1
-          }
-        ]
+        {
+          "animations": [ [ 8, 2, 27, 61, false ] ],
+          "speed": 1.0
+        },
+        {
+          "animations": [
+            [ 8, 2, 27, 61, true ],
+            [ 48, 1, 25, 62, true ],
+            [ 80, 1, 26, 61, true ],
+            [ 112, 0, 26, 62, true ]
+          ],
+          "speed": 0.1
+        }
       ]
     },
     "player2": {

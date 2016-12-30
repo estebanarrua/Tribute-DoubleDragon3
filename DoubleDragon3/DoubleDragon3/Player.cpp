@@ -1,7 +1,8 @@
 #include "Player.h"
 #include "Application.h"
 #include "ModuleTextures.h"
-
+#include "ModuleInput.h"
+#include "ModuleRender.h"
 
 
 Player::Player(CONFIG_OBJECT config) : Entity(config)
@@ -10,9 +11,10 @@ Player::Player(CONFIG_OBJECT config) : Entity(config)
 	position.x = (int)(CONFIG_ARRAY_NUMBER(aPosition, 0));
 	position.y = (int)(CONFIG_ARRAY_NUMBER(aPosition, 1));
 	CONFIG_ARRAY aMovements = CONFIG_OBJECT_ARRAY(config, "movements");
-	for (unsigned int i = 0; i < CONFIG_ARRAY_COUNT(aMovements) && i < movements.size(); ++i) {
+	for (unsigned int i = 0; i < CONFIG_ARRAY_COUNT(aMovements); ++i) {
 		CONFIG_OBJECT oMovement = CONFIG_ARRAY_OBJECT(aMovements, i);
 		CONFIG_ARRAY aAnimation = CONFIG_OBJECT_ARRAY(oMovement, "animations");
+		Animation a;
 		for (unsigned int j = 0; j < CONFIG_ARRAY_COUNT(aAnimation); ++j) {
 			CONFIG_ARRAY aFrame = CONFIG_ARRAY_ARRAY(aAnimation, j);
 			Frame f;
@@ -23,9 +25,10 @@ Player::Player(CONFIG_OBJECT config) : Entity(config)
 				(int) CONFIG_ARRAY_NUMBER(aFrame, 3),
 			};
 			f.flip = CONFIG_ARRAY_BOOL(aFrame, 4) != 0;
-			movements[i].frames.push_back(f);
+			a.frames.push_back(f);
 		}
-		movements[i].speed = CONFIG_OBJECT_NUMBER(oMovement, "speed");
+		a.speed = (float)CONFIG_OBJECT_NUMBER(oMovement, "speed");
+		movements.push_back(a);
 	}
 }
 
@@ -45,10 +48,44 @@ bool Player::Start()
 
 update_status Player::Update()
 {
-	return update_status();
+	Animation draw = movements[IDLE];
+
+	int speed = 3;
+
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	{
+		position.y -= speed;
+		draw = movements[WALK];
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		position.y += speed;
+		draw = movements[WALK];
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		position.x -= speed;
+		draw = movements[WALK];
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		position.x += speed;
+		draw = movements[WALK];
+	}
+
+	App->renderer->Blit(graphics, position.x, position.y, &(draw.GetCurrentFrame()), 1.0f);
+
+	return UPDATE_CONTINUE;
 }
 
 bool Player::CleanUp()
 {
-	return false;
+	LOG("Unloading player");
+
+	App->textures->Unload(graphics);
+
+	return true;
 }

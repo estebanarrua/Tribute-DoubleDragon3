@@ -12,6 +12,7 @@ class ModuleInput;
 class ModuleAudio;
 class ModuleFadeToBlack;
 class ModulePlayer;
+class ModuleEntity;
 class ModuleSceneChina;
 
 class Application
@@ -30,6 +31,7 @@ public:
 	ModuleAudio* audio;
 	ModuleFadeToBlack* fade;
 	ModulePlayer* player;
+	ModuleEntity* entitys;
 	ModuleSceneChina* scene_china;
 
 public:
