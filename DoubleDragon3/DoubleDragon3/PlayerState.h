@@ -1,0 +1,5 @@
+//        (Enum        , Function       )
+PLAYER_STATE(ST_IDLE, Idle)
+PLAYER_STATE(ST_WALK, Walk)
+PLAYER_STATE(ST_JUMP, Jump)
+PLAYER_STATE(ST_JUMP_MOVE, JumpMove)

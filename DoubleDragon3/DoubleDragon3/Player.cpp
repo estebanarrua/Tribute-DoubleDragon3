@@ -52,18 +52,6 @@ update_status Player::Update()
 
 	static int speed = 3;
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	{
-		position.y -= speed;
-		draw = movements[UP].GetCurrentFrame();
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		position.y += speed;
-		draw = movements[WALK].GetCurrentFrame();
-	}
-
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		
@@ -83,7 +71,19 @@ update_status Player::Update()
 		flip = false;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	{
+		position.y -= speed;
+		draw = movements[UP].GetCurrentFrame();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		position.y += speed;
+		draw = movements[WALK].GetCurrentFrame();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
 		draw = movements[JUMP].GetCurrentFrame();
 	}
