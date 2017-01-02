@@ -52,15 +52,13 @@ update_status Player::Update()
 	eDirection jDirection = NONE; //Jump direction.
 	static int speed = 3;
 
-	if (isJumping) {
-		draw = Jump(jDirection);
-	}
-	else if (isHitting) {
-		draw = Punch();
-	}
-	else {
+	switch (playerState)
+	{
+	case IDLE:
+	case WALK:
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		{
+			playerState = WALK;
 			jDirection = LEFT;
 			position.x -= speed;
 			draw = movements[WALK].GetCurrentFrame();
@@ -71,6 +69,7 @@ update_status Player::Update()
 
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		{
+			playerState = WALK;
 			jDirection = RIGHT;
 			position.x += speed;
 			draw = movements[WALK].GetCurrentFrame();
@@ -81,12 +80,14 @@ update_status Player::Update()
 
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		{
+			playerState = WALK;
 			position.y -= speed;
 			draw = movements[UP].GetCurrentFrame();
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		{
+			playerState = WALK;
 			position.y += speed;
 			draw = movements[WALK].GetCurrentFrame();
 		}
@@ -103,6 +104,23 @@ update_status Player::Update()
 		{
 			draw = Kick();
 		}
+		break;
+	case JUMP:
+	case FLY_KICK:
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			playerState = FLY_KICK;
+		}
+		draw = Jump(jDirection);
+		break;
+	case PUNCH:
+		draw = Punch();
+		break;
+	case KICK:
+		draw = Kick();
+		break;
+	default:
+		break;
 	}
 	
 	draw.flip ^= flip;
@@ -127,8 +145,8 @@ Frame Player::Jump(eDirection d)
 	static int ySpeed = -3;
 	static int xSpeed = 0;
 	static int yPosition = 0;
-	if (!isJumping) {
-		isJumping = true;
+	if (playerState != JUMP && playerState != FLY_KICK) {
+		playerState = JUMP;
 		if(d == RIGHT)
 			xSpeed = 3;
 		if(d == LEFT)
@@ -143,25 +161,25 @@ Frame Player::Jump(eDirection d)
 			ySpeed = 3;
 		if (position.y >= yPosition)
 		{
-			isJumping = false;
+			playerState = IDLE;
 			xSpeed = 0;
 			ySpeed = -3;
 		}
 	}
-	return movements[JUMP].GetCurrentFrame();
+	return movements[playerState].GetCurrentFrame();
 }
 
 Frame Player::Punch()
 {
 	static int count = 0;
-	if (!isHitting) {
-		isHitting = true;
+	if (playerState != PUNCH) {
+		playerState = PUNCH;
 		count = 0;
 	}
 	else {
 		++count;
 		if (count >= 5 )
-			isHitting = false;
+			playerState = IDLE;
 	}
 	return movements[PUNCH].GetCurrentFrame();
 }
@@ -169,14 +187,14 @@ Frame Player::Punch()
 Frame Player::Kick()
 {
 	static int count = 0;
-	if (!isHitting) {
-		isHitting = true;
+	if (playerState != KICK) {
+		playerState = KICK;
 		count = 0;
 	}
 	else {
 		++count;
 		if (count >= 5)
-			isHitting = false;
+			playerState = IDLE;
 	}
 	return movements[KICK].GetCurrentFrame();
 }

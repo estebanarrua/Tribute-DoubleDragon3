@@ -40,8 +40,7 @@ private:
 	//Movements
 	vector<Animation> movements;
 
-	bool isJumping = false;
-	bool isHitting = false;
+	eMovements playerState = IDLE;
 	
 public:
 	Player(CONFIG_OBJECT config);
