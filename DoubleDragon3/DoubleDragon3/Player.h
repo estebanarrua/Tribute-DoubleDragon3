@@ -33,13 +33,30 @@ enum eDirection
 	LEFT
 };
 
+enum eKeys
+{
+	K_UP,
+	K_DOWN,
+	K_RIGHT,
+	K_LEFT,
+
+	K_A,
+	K_B,
+	K_C,
+
+	K_START,
+	K_SELECT,
+
+	KEYS_COUNT
+};
+
 class Player :public Entity
 {
 
 private:
 	//Movements
 	vector<Animation> movements;
-
+	vector<int> keys;
 	eMovements playerState = IDLE;
 	
 public:

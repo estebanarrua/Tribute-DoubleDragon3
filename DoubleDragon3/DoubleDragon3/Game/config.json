@@ -21,6 +21,7 @@
     "player1": {
       "graphics": "Sprites/billy_jimmy.png",
       "position": [ 116, 128 ],
+      "keys": [ 82, 81, 79, 80, 4, 22, 7, 40, 44 ],
       "movements": [
         {
           "animations": [ [ 8, 2, 27, 61, false ] ],

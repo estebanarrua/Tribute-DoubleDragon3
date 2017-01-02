@@ -30,6 +30,11 @@ Player::Player(CONFIG_OBJECT config) : Entity(config)
 		a.speed = (float)CONFIG_OBJECT_NUMBER(oMovement, "speed");
 		movements.push_back(a);
 	}
+	CONFIG_ARRAY aKeys = CONFIG_OBJECT_ARRAY(config, "keys");
+	for (unsigned int i = 0; i < CONFIG_ARRAY_COUNT(aKeys); ++i) {
+		int k = (int) CONFIG_ARRAY_NUMBER(aKeys, i);
+		keys.push_back(k);
+	}
 }
 
 
@@ -56,7 +61,7 @@ update_status Player::Update()
 	{
 	case IDLE:
 	case WALK:
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		if (App->input->GetKey(keys[K_LEFT]) == KEY_REPEAT)
 		{
 			playerState = WALK;
 			jDirection = LEFT;
@@ -67,7 +72,7 @@ update_status Player::Update()
 			flip = true;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		if (App->input->GetKey(keys[K_RIGHT]) == KEY_REPEAT)
 		{
 			playerState = WALK;
 			jDirection = RIGHT;
@@ -78,36 +83,36 @@ update_status Player::Update()
 			flip = false;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+		if (App->input->GetKey(keys[K_UP]) == KEY_REPEAT)
 		{
 			playerState = WALK;
 			position.y -= speed;
 			draw = movements[UP].GetCurrentFrame();
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		if (App->input->GetKey(keys[K_DOWN]) == KEY_REPEAT)
 		{
 			playerState = WALK;
 			position.y += speed;
 			draw = movements[WALK].GetCurrentFrame();
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		if (App->input->GetKey(keys[K_B]) == KEY_DOWN)
 		{
 			draw = Jump(jDirection);
 		}
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		if (App->input->GetKey(keys[K_A]) == KEY_REPEAT)
 		{
 			draw = Punch();
 		}
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		if (App->input->GetKey(keys[K_C]) == KEY_REPEAT)
 		{
 			draw = Kick();
 		}
 		break;
 	case JUMP:
 	case FLY_KICK:
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		if (App->input->GetKey(keys[K_C]) == KEY_REPEAT)
 		{
 			playerState = FLY_KICK;
 		}
