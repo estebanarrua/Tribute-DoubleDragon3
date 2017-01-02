@@ -47,6 +47,14 @@
         {
           "animations": [ [ 248, 95, 31, 48, false ] ],
           "speed": 0.0
+        },
+        {
+          "animations": [
+            [ 8, 81, 24, 62, false ],
+            [ 40, 83, 39, 60, false ],
+            [ 8, 81, 24, 62, false ]
+          ],
+          "speed": 0.5
         }
       ]
     },
@@ -62,7 +70,7 @@
         ],
         [
           {
-            "animations": [
+            "animations": [ 
               [ 8, 2, 27, 61, true ],
               [ 48, 1, 25, 62, true ],
               [ 80, 1, 26, 61, true ],

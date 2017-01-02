@@ -49,45 +49,62 @@ bool Player::Start()
 update_status Player::Update()
 {
 	Frame draw = movements[IDLE].GetCurrentFrame();
-
+	eDirection jDirection = NONE; //Jump direction.
 	static int speed = 3;
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		
-		position.x -= speed;
-		draw = movements[WALK].GetCurrentFrame();
-		if (!flip)
-			position.x += draw.rect.w;
-		flip = true;
+	if (isJumping) {
+		draw = Jump(jDirection);
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		position.x += speed;
-		draw = movements[WALK].GetCurrentFrame();
-		if (flip)
-			position.x -= draw.rect.w;
-		flip = false;
+	else if (isHitting) {
+		draw = Punch();
 	}
+	else {
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		{
+			jDirection = LEFT;
+			position.x -= speed;
+			draw = movements[WALK].GetCurrentFrame();
+			if (!flip)
+				position.x += draw.rect.w;
+			flip = true;
+		}
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	{
-		position.y -= speed;
-		draw = movements[UP].GetCurrentFrame();
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		{
+			jDirection = RIGHT;
+			position.x += speed;
+			draw = movements[WALK].GetCurrentFrame();
+			if (flip)
+				position.x -= draw.rect.w;
+			flip = false;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+		{
+			position.y -= speed;
+			draw = movements[UP].GetCurrentFrame();
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		{
+			position.y += speed;
+			draw = movements[WALK].GetCurrentFrame();
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		{
+			draw = Jump(jDirection);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			draw = Punch();
+		}
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			draw = Kick();
+		}
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		position.y += speed;
-		draw = movements[WALK].GetCurrentFrame();
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-	{
-		draw = movements[JUMP].GetCurrentFrame();
-	}
-
+	
 	draw.flip ^= flip;
 
 	App->renderer->Blit(graphics, position.x, position.y, &draw, 1.0f);
@@ -102,4 +119,64 @@ bool Player::CleanUp()
 	App->textures->Unload(graphics);
 
 	return true;
+}
+
+Frame Player::Jump(eDirection d)
+{
+	const int maxCount = 7;
+	static int ySpeed = -3;
+	static int xSpeed = 0;
+	static int yPosition = 0;
+	if (!isJumping) {
+		isJumping = true;
+		if(d == RIGHT)
+			xSpeed = 3;
+		if(d == LEFT)
+			xSpeed = -3;
+		yPosition = position.y;
+	}
+	else 
+	{
+		position.x += xSpeed;
+		position.y += ySpeed;
+		if (position.y <= yPosition + maxCount * ySpeed)
+			ySpeed = 3;
+		if (position.y >= yPosition)
+		{
+			isJumping = false;
+			xSpeed = 0;
+			ySpeed = -3;
+		}
+	}
+	return movements[JUMP].GetCurrentFrame();
+}
+
+Frame Player::Punch()
+{
+	static int count = 0;
+	if (!isHitting) {
+		isHitting = true;
+		count = 0;
+	}
+	else {
+		++count;
+		if (count >= 5 )
+			isHitting = false;
+	}
+	return movements[PUNCH].GetCurrentFrame();
+}
+
+Frame Player::Kick()
+{
+	static int count = 0;
+	if (!isHitting) {
+		isHitting = true;
+		count = 0;
+	}
+	else {
+		++count;
+		if (count >= 5)
+			isHitting = false;
+	}
+	return movements[KICK].GetCurrentFrame();
 }

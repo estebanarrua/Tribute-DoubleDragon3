@@ -75,9 +75,6 @@
     <ClCompile Include="StateMachine.cpp">
       <Filter>StatesMachines</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerStateMachine.cpp">
-      <Filter>StatesMachines</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -138,12 +135,6 @@
       <Filter>StatesMachines</Filter>
     </ClInclude>
     <ClInclude Include="EventData.h">
-      <Filter>StatesMachines</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerState.h">
-      <Filter>StatesMachines</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerStateMachine.h">
       <Filter>StatesMachines</Filter>
     </ClInclude>
   </ItemGroup>

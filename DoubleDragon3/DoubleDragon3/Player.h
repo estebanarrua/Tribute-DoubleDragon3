@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Animation.h"
 
-enum movements
+enum eMovements
 {
 	IDLE,
 	WALK,
@@ -26,13 +26,23 @@ enum movements
 	MOVEMENTS_COUNT
 };
 
+enum eDirection 
+{
+	NONE,
+	RIGHT,
+	LEFT
+};
+
 class Player :public Entity
 {
+
 private:
-	
 	//Movements
 	vector<Animation> movements;
 
+	bool isJumping = false;
+	bool isHitting = false;
+	
 public:
 	Player(CONFIG_OBJECT config);
 	~Player();
@@ -40,6 +50,11 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+
+private:
+	Frame Jump(eDirection d);
+	Frame Punch();
+	Frame Kick();
 };
 
 #endif //PLAYER
