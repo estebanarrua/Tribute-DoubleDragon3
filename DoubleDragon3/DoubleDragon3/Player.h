@@ -8,6 +8,7 @@ enum eMovements
 {
 	IDLE,
 	WALK,
+	RUN,
 	UP,
 	JUMP,
 	PUNCH,

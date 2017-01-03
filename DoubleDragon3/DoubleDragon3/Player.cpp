@@ -56,6 +56,7 @@ update_status Player::Update()
 	Frame draw = movements[IDLE].GetCurrentFrame();
 	eDirection jDirection = NONE; //Jump direction.
 	static int speed = 3;
+	static int countWalk = 0;
 
 	switch (playerState)
 	{
@@ -71,7 +72,6 @@ update_status Player::Update()
 				position.x += draw.rect.w;
 			flip = true;
 		}
-
 		if (App->input->GetKey(keys[K_RIGHT]) == KEY_REPEAT)
 		{
 			playerState = WALK;
@@ -101,18 +101,18 @@ update_status Player::Update()
 		{
 			draw = Jump(jDirection);
 		}
-		if (App->input->GetKey(keys[K_A]) == KEY_REPEAT)
+		if (App->input->GetKey(keys[K_A]) == KEY_DOWN)
 		{
 			draw = Punch();
 		}
-		if (App->input->GetKey(keys[K_C]) == KEY_REPEAT)
+		if (App->input->GetKey(keys[K_C]) == KEY_DOWN)
 		{
 			draw = Kick();
 		}
 		break;
 	case JUMP:
 	case FLY_KICK:
-		if (App->input->GetKey(keys[K_C]) == KEY_REPEAT)
+		if (App->input->GetKey(keys[K_C]) == KEY_DOWN)
 		{
 			playerState = FLY_KICK;
 		}

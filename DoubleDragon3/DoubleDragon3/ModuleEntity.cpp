@@ -6,7 +6,7 @@ using namespace std;
 
 ModuleEntity::ModuleEntity(CONFIG_OBJECT config, bool start_enabled) : Module(config, start_enabled)
 {
-	Entity* e = new Player(CONFIG_OBJECT_OBJECT(config, "player1"));
+	Entity* e = new Player(CONFIG_OBJECT_OBJECT(config, "player2"));
 	entities.push_back(e);
 }
 

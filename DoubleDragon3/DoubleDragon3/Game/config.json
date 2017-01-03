@@ -21,7 +21,7 @@
     "player1": {
       "graphics": "Sprites/billy_jimmy.png",
       "position": [ 116, 128 ],
-      "keys": [ 82, 81, 79, 80, 4, 22, 7, 40, 44 ],
+      "keys": [ 26, 22, 7, 4, 9, 10, 11, 40, 44 ],
       "movements": [
         {
           "animations": [ [ 8, 2, 27, 61, false ] ],
@@ -35,6 +35,15 @@
             [ 112, 0, 26, 62, false ]
           ],
           "speed": 0.2
+        },
+        {
+          "animations": [
+            [ 8, 2, 27, 61, false ],
+            [ 48, 1, 25, 62, false ],
+            [ 80, 1, 26, 61, false ],
+            [ 112, 0, 26, 62, false ]
+          ],
+          "speed": 0.5
         },
         {
           "animations": [
@@ -74,24 +83,63 @@
     "player2": {
       "graphics": "Sprites/billy_jimmy.png",
       "position": [ 116, 128 ],
+      "keys": [ 82, 81, 79, 80, 12, 18, 19, 14, 15 ],
       "movements": [
-        [
-          {
-            "animations": [ [ 8, 2, 27, 61, false ] ],
-            "speed": 1.0
-          }
-        ],
-        [
-          {
-            "animations": [ 
-              [ 8, 2, 27, 61, true ],
-              [ 48, 1, 25, 62, true ],
-              [ 80, 1, 26, 61, true ],
-              [ 112, 0, 26, 62, true ]
-            ],
-            "speed": 0.1
-          }
-        ]
+        {
+          "animations": [ [ 8, 466, 27, 61, false ] ],
+          "speed": 0.0
+        },
+        {
+          "animations": [
+            [ 8, 466, 27, 61, false ],
+            [ 48, 465, 25, 62, false ],
+            [ 80, 465, 26, 61, false ],
+            [ 112, 464, 26, 62, false ]
+          ],
+          "speed": 0.2
+        },
+        {
+          "animations": [
+            [ 8, 466, 27, 61, false ],
+            [ 48, 465, 25, 62, false ],
+            [ 80, 465, 26, 61, false ],
+            [ 112, 464, 26, 62, false ]
+          ],
+          "speed": 0.5
+        },
+        {
+          "animations": [
+            [ 152, 465, 21, 62, false ],
+            [ 183, 468, 21, 59, false ],
+            [ 216, 467, 21, 60, false ],
+            [ 248, 466, 21, 61, false ]
+          ],
+          "speed": 0.2
+        },
+        {
+          "animations": [ [ 248, 559, 31, 48, false ] ],
+          "speed": 0.0
+        },
+        {
+          "animations": [
+            [ 8, 545, 24, 62, false ],
+            [ 40, 547, 39, 60, false ],
+            [ 8, 545, 24, 62, false ]
+          ],
+          "speed": 0.5
+        },
+        {
+          "animations": [
+            [ 88, 550, 24, 57, false ],
+            [ 120, 551, 38, 56, false ],
+            [ 88, 550, 24, 57, false ]
+          ],
+          "speed": 0.5
+        },
+        {
+          "animations": [ [ 288, 565, 46, 42, false ] ],
+          "speed": 0.0
+        }
       ]
     }
   },
