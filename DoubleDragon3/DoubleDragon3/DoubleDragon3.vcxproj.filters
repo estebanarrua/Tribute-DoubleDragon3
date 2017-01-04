@@ -78,6 +78,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Classes\Source code files</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleSceneInit.cpp">
+      <Filter>Modules\Source code files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -142,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Classes\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleSceneInit.h">
+      <Filter>Modules\Header files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

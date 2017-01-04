@@ -4,16 +4,25 @@
   },
   "window": {
     "title": "Double Dragon 3: The Rosetta Stone",
-    "screen_size": [ 384, 224, 4 ],
+    "screen_size": [ 320, 224, 4 ],
     "fullscreen": false
   },
   "render": {
-    "screen_size": [ 384, 224, 4 ],
+    "screen_size": [ 320, 224, 4 ],
     "vsync": true
   },
   "textures": {
   },
   "audio": {
+  },
+  "sceneInit": {
+    "segaGraphics": "Sprites/sega.png",
+    "segaAnimation": [ 0, 0, 96, 32, false, 122, 96],
+    "segaAnimationCount": 14,
+    "segaAnimationSpeed": 1.0,
+    "flyingedgeGraphics": "Sprites/flyingedge.png",
+    "flyingedgeFrame": [ 0, 0, 320, 224, false ],
+    "music": "Music/01-rosetta-stone.ogg"
   },
   "sceneChina": {
   },

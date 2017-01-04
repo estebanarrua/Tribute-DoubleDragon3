@@ -8,6 +8,8 @@ class Module
 
 private:
 	bool active = true;
+
+public:
 	CONFIG_OBJECT config;
 
 public:

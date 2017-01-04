@@ -7,9 +7,14 @@
 
 struct SDL_Texture;
 
-class ModuleSceneChina :
-	public Module
+class ModuleSceneChina : public Module
 {
+public:
+
+	SDL_Texture* graphics = nullptr;
+	Frame background;
+	Frame tree;
+
 public:
 	ModuleSceneChina(CONFIG_OBJECT config, bool start_enabled = true);
 	~ModuleSceneChina();
@@ -18,11 +23,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-public:
 
-	SDL_Texture* graphics = nullptr;
-	Frame background;
-	Frame tree;
 };
 
 #endif // __MODULESCENECHINA_H__
