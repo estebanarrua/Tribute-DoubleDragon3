@@ -22,7 +22,8 @@
     "segaAnimationSpeed": 1.0,
     "flyingedgeGraphics": "Sprites/flyingedge.png",
     "flyingedgeFrame": [ 0, 0, 320, 224, false ],
-    "music": "Music/01-rosetta-stone.ogg"
+    "music": "Music/01-rosetta-stone.ogg",
+    "times": [ 6000, 10000, 4000]
   },
   "sceneChina": {
   },

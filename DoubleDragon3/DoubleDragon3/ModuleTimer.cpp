@@ -27,3 +27,4 @@ bool ModuleTimer::CleanUp()
 {
 	return true;
 }
+

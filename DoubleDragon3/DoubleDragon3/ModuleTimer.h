@@ -6,7 +6,7 @@
 class ModuleTimer : public Module
 {
 
-private:
+public:
 	unsigned int firtTime = 0;
 	unsigned int lastTime = 0;
 
