@@ -23,7 +23,13 @@
     "flyingedgeGraphics": "Sprites/flyingedge.png",
     "flyingedgeFrame": [ 0, 0, 320, 224, false ],
     "music": "Music/01-rosetta-stone.ogg",
-    "times": [ 6000, 10000, 4000]
+    "initPageGraphics": "Sprites/init_page.png",
+    "initPageFrames": [
+      [ 0, 0, 960, 224, false ],
+      [ 0, 224, 320, 160, false ],
+      [ 0, 384, 320, 64, false ]
+    ],
+    "times": [ 6000, 10000, 4000, 0]
   },
   "sceneChina": {
   },

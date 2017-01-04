@@ -5,6 +5,7 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModuleTimer.h"
+#include "ModuleWindow.h"
 
 ModuleSceneInit::ModuleSceneInit(CONFIG_OBJECT config, bool start_enabled) : Module(config, start_enabled)
 {
@@ -39,6 +40,31 @@ ModuleSceneInit::ModuleSceneInit(CONFIG_OBJECT config, bool start_enabled) : Mod
 		(int)CONFIG_ARRAY_NUMBER(aFlying, 3),
 	};
 	flyingedge.flip = CONFIG_ARRAY_BOOL(aFlying, 4) != 0;
+	CONFIG_ARRAY aInitPage = CONFIG_OBJECT_ARRAY(config, "initPageFrames");
+	CONFIG_ARRAY aFrame = CONFIG_ARRAY_ARRAY(aInitPage, 0);
+	background.rect = {
+		(int)CONFIG_ARRAY_NUMBER(aFrame, 0),
+		(int)CONFIG_ARRAY_NUMBER(aFrame, 1),
+		(int)CONFIG_ARRAY_NUMBER(aFrame, 2),
+		(int)CONFIG_ARRAY_NUMBER(aFrame, 3),
+	};
+	background.flip = CONFIG_ARRAY_BOOL(aFrame, 4) != 0;
+	aFrame = CONFIG_ARRAY_ARRAY(aInitPage, 1);
+	bigFonts.rect = {
+		(int)CONFIG_ARRAY_NUMBER(aFrame, 0),
+		(int)CONFIG_ARRAY_NUMBER(aFrame, 1),
+		(int)CONFIG_ARRAY_NUMBER(aFrame, 2),
+		(int)CONFIG_ARRAY_NUMBER(aFrame, 3),
+	};
+	bigFonts.flip = CONFIG_ARRAY_BOOL(aFrame, 4) != 0;
+	aFrame = CONFIG_ARRAY_ARRAY(aInitPage, 2);
+	smallFonts.rect = {
+		(int)CONFIG_ARRAY_NUMBER(aFrame, 0),
+		(int)CONFIG_ARRAY_NUMBER(aFrame, 1),
+		(int)CONFIG_ARRAY_NUMBER(aFrame, 2),
+		(int)CONFIG_ARRAY_NUMBER(aFrame, 3),
+	};
+	smallFonts.flip = CONFIG_ARRAY_BOOL(aFrame, 4) != 0;
 }
 
 ModuleSceneInit::~ModuleSceneInit()
@@ -51,14 +77,20 @@ bool ModuleSceneInit::Start()
 	LOG("Loading Init scene");
 	segaGraphics = App->textures->Load(CONFIG_OBJECT_STRING(config, "segaGraphics"));
 	flyingedgeGraphics = App->textures->Load(CONFIG_OBJECT_STRING(config, "flyingedgeGraphics"));
+	initPageGraphics = App->textures->Load(CONFIG_OBJECT_STRING(config, "initPageGraphics"));
 	
 	App->audio->PlayMusic(CONFIG_OBJECT_STRING(config, "music"));
-	lastTime = App->timer->lastTime;
+	lastTime = 0;
+	backgroundMaxWith = background.rect.w;
+	background.rect.w = App->window->screenWidth;
+	bigFontsPositionX = -App->window->screenWidth;
 	return true;
 }
 
 update_status ModuleSceneInit::Update()
 {
+	if (lastTime == 0)
+		lastTime = App->timer->lastTime;
 	switch (actualState)
 	{
 	case SEGA:
@@ -67,15 +99,36 @@ update_status ModuleSceneInit::Update()
 	case FLYING:
 		App->renderer->Blit(flyingedgeGraphics, 0, 0, &flyingedge, 1.0f);
 		break;
+	case INIT_PAGE:
+		if (background.rect.x + App->window->screenWidth != backgroundMaxWith)
+		{
+			int deltaTime = (App->timer->lastTime - backgroundTime)/2;
+			background.rect.x += deltaTime;
+			backgroundTime = App->timer->lastTime;
+			if (background.rect.x >= (backgroundMaxWith - App->window->screenWidth * 2)) 
+				bigFontsPositionX += deltaTime;
+			if (background.rect.x >= backgroundMaxWith - App->window->screenWidth) {
+				background.rect.x = backgroundMaxWith - App->window->screenWidth;
+				bigFontsPositionX = 0;
+			}
+		}
+		App->renderer->Blit(initPageGraphics, 0, 0, &background, 1.0f);
+		App->renderer->Blit(initPageGraphics, bigFontsPositionX, 0, &bigFonts, 1.0f);
+		if (bigFontsPositionX == 0) {
+			App->renderer->Blit(initPageGraphics, 0, bigFonts.rect.h, &smallFonts, 1.0f);
+		}
+		break;
 	default:
 		break;
 	}
-	if (actualState != TOTAL_STATES) {
+	if (actualState != INIT_PAGE) {
 		if (App->timer->lastTime - lastTime > times[actualState]) {
 			actualState = (initState)((int)actualState + 1);
 			lastTime = App->timer->lastTime;
 		}
-			
+		if (actualState == INIT_PAGE) {
+			backgroundTime = lastTime;
+		}
 	}
 
 	return UPDATE_CONTINUE;

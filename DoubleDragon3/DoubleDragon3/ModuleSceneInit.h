@@ -12,6 +12,7 @@ enum initState {
 	SEGA,
 	FLYING,
 	BLACK,
+	INIT_PAGE,
 
 	TOTAL_STATES
 };
@@ -21,12 +22,19 @@ class ModuleSceneInit : public Module
 private:
 	SDL_Texture* segaGraphics = nullptr;
 	SDL_Texture* flyingedgeGraphics = nullptr;
+	SDL_Texture* initPageGraphics = nullptr;
 
 	Frame flyingedge;
+	Frame background;
+	Frame bigFonts;
+	Frame smallFonts;
 	Animation sega;
 	iPoint segaPosition;
+	int bigFontsPositionX;
 
 	initState actualState = SEGA;
+	int backgroundMaxWith = 0;
+	unsigned int backgroundTime = 0;
 	unsigned int lastTime = 0;
 	unsigned int times[TOTAL_STATES];
 
