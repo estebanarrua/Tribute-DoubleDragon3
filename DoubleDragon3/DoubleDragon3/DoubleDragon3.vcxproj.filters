@@ -75,6 +75,9 @@
     <ClCompile Include="StateMachine.cpp">
       <Filter>StatesMachines</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Classes\Source code files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -136,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="EventData.h">
       <Filter>StatesMachines</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Classes\Header files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
