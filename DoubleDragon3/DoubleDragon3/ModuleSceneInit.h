@@ -31,12 +31,15 @@ private:
 	Animation sega;
 	iPoint segaPosition;
 	int bigFontsPositionX;
+	int starts[2];
+	int startPressed = -1;
 
 	initState actualState = SEGA;
 	int backgroundMaxWith = 0;
 	unsigned int backgroundTime = 0;
 	unsigned int lastTime = 0;
 	unsigned int times[TOTAL_STATES];
+
 
 public:
 

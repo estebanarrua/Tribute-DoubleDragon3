@@ -6,6 +6,9 @@
 #include "ModuleAudio.h"
 #include "ModuleTimer.h"
 #include "ModuleWindow.h"
+#include "ModuleInput.h"
+#include "ModuleFadeToBlack.h"
+#include "ModuleSceneChina.h"
 
 ModuleSceneInit::ModuleSceneInit(CONFIG_OBJECT config, bool start_enabled) : Module(config, start_enabled)
 {
@@ -65,6 +68,9 @@ ModuleSceneInit::ModuleSceneInit(CONFIG_OBJECT config, bool start_enabled) : Mod
 		(int)CONFIG_ARRAY_NUMBER(aFrame, 3),
 	};
 	smallFonts.flip = CONFIG_ARRAY_BOOL(aFrame, 4) != 0;
+	CONFIG_ARRAY aStart = CONFIG_OBJECT_ARRAY(config, "starts");
+	starts[0] = (int)CONFIG_ARRAY_NUMBER(aStart, 0);
+	starts[1] = (int)CONFIG_ARRAY_NUMBER(aStart, 1);
 }
 
 ModuleSceneInit::~ModuleSceneInit()
@@ -98,6 +104,10 @@ update_status ModuleSceneInit::Update()
 		break;
 	case FLYING:
 		App->renderer->Blit(flyingedgeGraphics, 0, 0, &flyingedge, 1.0f);
+		if (App->input->GetKey(starts[0]) == KEY_DOWN || App->input->GetKey(starts[1]) == KEY_DOWN) {
+			actualState = (initState)((int)actualState + 1);
+			lastTime = App->timer->lastTime;
+		}
 		break;
 	case INIT_PAGE:
 		if (background.rect.x + App->window->screenWidth != backgroundMaxWith)
@@ -117,6 +127,10 @@ update_status ModuleSceneInit::Update()
 		if (bigFontsPositionX == 0) {
 			App->renderer->Blit(initPageGraphics, 0, bigFonts.rect.h, &smallFonts, 1.0f);
 		}
+		if (App->input->GetKey(starts[0]) == KEY_DOWN)
+			startPressed = 0;
+		if (App->input->GetKey(starts[1]) == KEY_DOWN)
+			startPressed = 1;
 		break;
 	default:
 		break;
@@ -130,7 +144,11 @@ update_status ModuleSceneInit::Update()
 			backgroundTime = lastTime;
 		}
 	}
-
+	if (startPressed != -1) {
+		App->scene_china->player[startPressed] = true;
+		App->fade->FadeToBlack(App->scene_china, this, 0.0f);
+		startPressed = -1;
+	}
 	return UPDATE_CONTINUE;
 }
 
@@ -138,5 +156,6 @@ bool ModuleSceneInit::CleanUp()
 {
 	App->textures->Unload(segaGraphics);
 	App->textures->Unload(flyingedgeGraphics);
-	return false;
+	App->textures->Unload(initPageGraphics);
+	return true;
 }

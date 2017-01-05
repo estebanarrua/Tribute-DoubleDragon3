@@ -52,9 +52,6 @@ bool Application::Init()
 			ret = (*it)->Start();
 	}
 
-	// Start the first scene --
-	//fade->FadeToBlack(scene_china, nullptr, 3.0f);
-
 	return ret;
 }
 
