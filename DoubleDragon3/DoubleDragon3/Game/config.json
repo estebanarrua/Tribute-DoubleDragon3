@@ -33,9 +33,9 @@
     "starts": [40, 14 ]
   },
   "sceneChina": {
-    "start": [40, 14 ]
   },
   "entitys": {
+    "start": [40, 14 ],
     "player1": {
       "graphics": "Sprites/billy_jimmy.png",
       "position": [ 116, 128 ],

@@ -13,6 +13,7 @@ class ModuleEntity : public Module
 public:
 	std::vector<Player*> players;
 	std::list<Entity*> entities;
+	bool playerStart[2] = { false, false };
 
 public:
 	ModuleEntity(CONFIG_OBJECT config, bool start_enabled = true);

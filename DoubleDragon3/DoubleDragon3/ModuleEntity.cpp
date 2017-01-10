@@ -12,7 +12,6 @@ ModuleEntity::ModuleEntity(CONFIG_OBJECT config, bool start_enabled) : Module(co
 	Player* player2 = new Player(CONFIG_OBJECT_OBJECT(config, "player2"));
 	entities.push_back((Entity*)player2);
 	players.push_back(player2);
-
 }
 
 ModuleEntity::~ModuleEntity()
@@ -26,9 +25,14 @@ ModuleEntity::~ModuleEntity()
 bool ModuleEntity::Start()
 {
 	bool ret = true;
+	if (playerStart[0])
+		players[0]->Enable();
+	if (playerStart[1])
+		players[1]->Enable();
 
 	for (list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret; ++it)
-		(*it)->Start();
+		if ((*it)->IsEnabled())
+			(*it)->Start();
 
 	return ret;
 }

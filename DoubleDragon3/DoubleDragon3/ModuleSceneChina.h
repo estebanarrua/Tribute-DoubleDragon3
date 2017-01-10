@@ -14,7 +14,6 @@ public:
 	SDL_Texture* graphics = nullptr;
 	Frame background;
 	Frame tree;
-	bool player[2] = { false, false };
 
 public:
 	ModuleSceneChina(CONFIG_OBJECT config, bool start_enabled = true);

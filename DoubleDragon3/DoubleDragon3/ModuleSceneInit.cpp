@@ -9,6 +9,7 @@
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneChina.h"
+#include "ModuleEntity.h"
 
 ModuleSceneInit::ModuleSceneInit(CONFIG_OBJECT config, bool start_enabled) : Module(config, start_enabled)
 {
@@ -146,7 +147,7 @@ update_status ModuleSceneInit::Update()
 	}
 	if (startPressed != -1) {
 
-		App->scene_china->player[startPressed] = true;
+		App->entitys->playerStart[startPressed] = true;
 		if (!App->scene_china->Enable() || !this->Disable()) {
 			return UPDATE_ERROR;
 		}
