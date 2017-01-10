@@ -1,4 +1,8 @@
 #include "Enemy.h"
+#include "Application.h"
+#include "ModuleTextures.h"
+#include "ModuleInput.h"
+#include "ModuleRender.h"
 
 
 Enemy::Enemy(CONFIG_OBJECT config) : Entity(config)
@@ -30,19 +34,34 @@ Enemy::Enemy(CONFIG_OBJECT config) : Entity(config)
 
 Enemy::~Enemy()
 {
+
 }
 
 bool Enemy::Start()
 {
-	return false;
+	LOG("Loading enemy");
+
+	graphics = App->textures->Load(CONFIG_OBJECT_STRING(config, "graphics"));
+
+	return true;
 }
 
 update_status Enemy::Update()
 {
-	return update_status();
+	Frame draw = movements[E_IDLE].GetCurrentFrame();
+	static int speed = 3;
+
+	draw.flip ^= flip;
+	App->renderer->Blit(graphics, position.x, position.y, &draw, 1.0f);
+
+	return UPDATE_CONTINUE;
 }
 
 bool Enemy::CleanUp()
 {
-	return false;
+	LOG("Unloading enemy");
+
+	App->textures->Unload(graphics);
+
+	return true;
 }

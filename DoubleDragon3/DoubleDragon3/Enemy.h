@@ -4,29 +4,22 @@
 #include "Entity.h"
 #include "Animation.h"
 
-enum eMovements
+enum eMovEnemy
 {
-	IDLE,
-	WALK,
-	UP,
-	PUNCH,
-	KICK,
+	E_IDLE,
+	E_WALK,
+	E_UP,
+	E_PUNCH,
+	E_KICK,
 
-	MOVEMENTS_COUNT
-};
-
-enum eDirection
-{
-	NONE,
-	RIGHT,
-	LEFT
+	E_MOVEMENTS_COUNT
 };
 
 class Enemy : public Entity
 {
 	//Movements
 	vector<Animation> movements;
-	eMovements enemyState = IDLE;
+	eMovEnemy enemyState = E_IDLE;
 
 public:
 	Enemy(CONFIG_OBJECT config);

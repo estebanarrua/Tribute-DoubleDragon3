@@ -162,14 +162,12 @@
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="parson.c" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="StateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="EventData.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="ConfigParson.h" />
     <ClInclude Include="Module.h" />
@@ -186,7 +184,6 @@
     <ClInclude Include="parson.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
-    <ClInclude Include="StateMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Game\config.json" />

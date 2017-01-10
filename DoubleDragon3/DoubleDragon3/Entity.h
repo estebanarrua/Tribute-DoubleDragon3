@@ -14,6 +14,7 @@ private:
 public:
 	CONFIG_OBJECT config;
 	iPoint position;
+	int zPosition = 0;
 	bool flip; 
 	SDL_Texture* graphics = nullptr;
 
@@ -73,6 +74,11 @@ public:
 	virtual bool CleanUp()
 	{
 		return true;
+	}
+
+	bool isZLower(Entity* ent) const
+	{
+		return zPosition <= ent->zPosition;
 	}
 };
 

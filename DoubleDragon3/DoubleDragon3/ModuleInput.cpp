@@ -115,12 +115,6 @@ update_status ModuleInput::PreUpdate()
 				mouse_buttons[event.button.button - 1] = KEY_UP;
 			break;
 
-			/*case SDL_MOUSEMOTION:
-				mouse_motion.x = event.motion.xrel / screenSize;
-				mouse_motion.y = event.motion.yrel / screenSize;
-				mouse.x = event.motion.x / screenSize;
-				mouse.y = event.motion.y / screenSize;
-			break;*/
 		}
 	}
 

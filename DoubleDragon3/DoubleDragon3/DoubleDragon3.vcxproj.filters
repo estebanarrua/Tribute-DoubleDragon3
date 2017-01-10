@@ -25,9 +25,6 @@
     <Filter Include="Modules\Source code files">
       <UniqueIdentifier>{158b1af4-1cfe-472b-8c80-0e25a43ab7e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="StatesMachines">
-      <UniqueIdentifier>{b7e9aa2b-5c3e-46e7-ac59-751be0ec0bde}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -71,9 +68,6 @@
     </ClCompile>
     <ClCompile Include="ModuleTimer.cpp">
       <Filter>Modules\Source code files</Filter>
-    </ClCompile>
-    <ClCompile Include="StateMachine.cpp">
-      <Filter>StatesMachines</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Classes\Source code files</Filter>
@@ -136,12 +130,6 @@
     </ClInclude>
     <ClInclude Include="ModuleTimer.h">
       <Filter>Modules\Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="StateMachine.h">
-      <Filter>StatesMachines</Filter>
-    </ClInclude>
-    <ClInclude Include="EventData.h">
-      <Filter>StatesMachines</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Classes\Header files</Filter>

@@ -13,6 +13,7 @@ class ModuleEntity : public Module
 public:
 	std::vector<Player*> players;
 	std::list<Entity*> entities;
+	std::vector<Entity*> entitiesZOrder;
 	bool playerStart[2] = { false, false };
 
 public:
@@ -20,8 +21,12 @@ public:
 	~ModuleEntity();
 
 	bool Start();
+	update_status PreUpdate();
 	update_status Update();
 	bool CleanUp();
+
+private:
+	void OrderByZ( int pIni, int pEnd);
 };
 
 #endif //MODULEENTITY

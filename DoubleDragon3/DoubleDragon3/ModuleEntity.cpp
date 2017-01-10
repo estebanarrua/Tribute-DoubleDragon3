@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "ModuleEntity.h"
 #include "Player.h"
+#include "Enemy.h"
 
 using namespace std;
 
@@ -37,13 +38,26 @@ bool ModuleEntity::Start()
 	return ret;
 }
 
+update_status ModuleEntity::PreUpdate()
+{
+	entitiesZOrder.clear();
+	for (list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
+		if ((*it)->IsEnabled())
+			entitiesZOrder.push_back((*it));
+	OrderByZ( 0, entitiesZOrder.size() - 1);
+
+	return UPDATE_CONTINUE;
+}
+
+
+
 update_status ModuleEntity::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
 
-	for (list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UPDATE_CONTINUE; ++it)
+	for (vector<Entity*>::iterator it = entitiesZOrder.begin(); it != entitiesZOrder.end() && ret == UPDATE_CONTINUE; ++it)
 		if((*it)->IsEnabled())
-			(*it)->Update();
+			ret = (*it)->Update();
 
 	return ret;
 }
@@ -55,6 +69,47 @@ bool ModuleEntity::CleanUp()
 
 	for (list<Entity*>::reverse_iterator it = entities.rbegin(); it != entities.rend() && ret; ++it)
 		ret = (*it)->CleanUp();
+	entities.clear();
 
 	return ret;
 }
+
+void ModuleEntity::OrderByZ( int pIni, int pEnd)
+{
+	vector<Entity*> ret;
+	if (pEnd - pIni > 1)  {
+		int pMiddle = (pEnd - pIni) / 2;
+		pMiddle += pIni;
+		OrderByZ( pIni, pMiddle);
+		OrderByZ( ++pMiddle, pEnd);
+		int i = pIni;
+		int j = pMiddle;
+		while (i < pMiddle && j < pEnd)
+		{
+			if (entitiesZOrder[j]->isZLower(entitiesZOrder[i])) {
+				Entity* aux = entitiesZOrder[j];
+				for (int k = j; k > i; --k) {
+					entitiesZOrder[k] = entitiesZOrder[k - 1];
+				}
+				entitiesZOrder[i] = aux;
+				++i;
+				++j;
+			}
+			else {
+				++i;
+			}
+		}
+	}
+	else {
+		if (pEnd != pIni) {
+			if (!entitiesZOrder[pIni]->isZLower(entitiesZOrder[pEnd])) {
+				Entity* aux = entitiesZOrder[pIni];
+				entitiesZOrder[pIni] = entitiesZOrder[pEnd];
+				entitiesZOrder[pEnd] = aux;
+			}
+		}
+	}
+}
+
+
+
