@@ -57,17 +57,17 @@ update_status ModuleRender::PreUpdate()
 	// debug camera
 	int speed = 3 * screenSize;
 	int xMax = 0;
-	int xMin = screenWidth;
+	int xMin = 1104;
 
-	if (App->entitys->players[0]->IsEnabled()) {
-		xMax = App->entitys->players[0]->position.x;
-		xMin = App->entitys->players[0]->position.x;
+	if (App->entities->players[0]->IsEnabled()) {
+		xMax = App->entities->players[0]->position.x;
+		xMin = App->entities->players[0]->position.x;
 	}
-	if (App->entitys->players[1]->IsEnabled() && App->entitys->players[1]->position.x > xMax) {
-		xMax = App->entitys->players[1]->position.x;
+	if (App->entities->players[1]->IsEnabled() && App->entities->players[1]->position.x > xMax) {
+		xMax = App->entities->players[1]->position.x;
 	}
-	if (App->entitys->players[1]->IsEnabled() && App->entitys->players[1]->position.x < xMin) {
-		xMin = App->entitys->players[1]->position.x;
+	if (App->entities->players[1]->IsEnabled() && App->entities->players[1]->position.x < xMin) {
+		xMin = App->entities->players[1]->position.x;
 	}
 
 	if (camera.x + xMax*screenSize >(screenWidth / 4) * 3 * screenSize) {

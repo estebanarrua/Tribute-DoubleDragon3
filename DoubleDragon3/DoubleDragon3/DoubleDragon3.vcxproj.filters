@@ -75,6 +75,9 @@
     <ClCompile Include="ModuleSceneInit.cpp">
       <Filter>Modules\Source code files</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleCollision.cpp">
+      <Filter>Modules\Source code files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -135,6 +138,9 @@
       <Filter>Classes\Header files</Filter>
     </ClInclude>
     <ClInclude Include="ModuleSceneInit.h">
+      <Filter>Modules\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleCollision.h">
       <Filter>Modules\Header files</Filter>
     </ClInclude>
   </ItemGroup>

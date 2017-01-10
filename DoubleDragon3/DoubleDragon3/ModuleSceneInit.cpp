@@ -147,7 +147,7 @@ update_status ModuleSceneInit::Update()
 	}
 	if (startPressed != -1) {
 
-		App->entitys->playerStart[startPressed] = true;
+		App->entities->playerStart[startPressed] = true;
 		if (!App->scene_china->Enable() || !this->Disable()) {
 			return UPDATE_ERROR;
 		}

@@ -37,7 +37,7 @@ bool ModuleSceneChina::Start()
 
 	App->audio->PlayMusic("Music/03-in-china.ogg");
 
-	App->entitys->Enable();
+	App->entities->Enable();
 
 	return true;
 }

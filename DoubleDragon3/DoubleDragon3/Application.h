@@ -15,6 +15,7 @@ class ModuleFadeToBlack;
 class ModuleEntity;
 class ModuleSceneChina;
 class ModuleSceneInit;
+class ModuleCollision;
 
 class Application
 {
@@ -32,9 +33,10 @@ public:
 	ModuleInput* input;
 	ModuleAudio* audio;
 	ModuleFadeToBlack* fade;
-	ModuleEntity* entitys;
+	ModuleEntity* entities;
 	ModuleSceneChina* scene_china;
 	ModuleSceneInit* scene_init;
+	ModuleCollision* collisions;
 
 public:
 
