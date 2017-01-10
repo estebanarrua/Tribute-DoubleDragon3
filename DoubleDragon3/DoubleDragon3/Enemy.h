@@ -8,21 +8,9 @@ enum eMovements
 {
 	IDLE,
 	WALK,
-	RUN,
 	UP,
-	JUMP,
 	PUNCH,
 	KICK,
-	FLY_KICK,
-	FLY_KNEE,
-	HEADER,
-
-	//Specials Tricks
-	ROTATING_KICK,
-	KEY,
-
-	//Weapons
-	NUNCHACUS,
 
 	MOVEMENTS_COUNT
 };

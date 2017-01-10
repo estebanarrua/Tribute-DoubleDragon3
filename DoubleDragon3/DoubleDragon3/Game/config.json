@@ -159,6 +159,48 @@
           "speed": 0.0
         }
       ]
+    },
+    "enemy1": {
+      "graphics": "Sprites/enemies.png",
+      "position": [ 200, 128 ],
+      "movements": [
+        {
+          "animations": [ [ 8, 8, 26, 60, false ] ],
+          "speed": 0.0
+        }, //IDLE
+        {
+          "animations": [
+            [ 8, 8, 26, 60, false ],
+            [ 48, 8, 21, 60, false ],
+            [ 79, 8, 23, 60, false ],
+            [ 112, 5, 21, 63, false ]
+          ],
+          "speed": 0.2
+        }, //WALK
+        {
+          "animations": [
+            [ 144, 7, 19, 61, false ],
+            [ 176, 7, 19, 61, false ],
+            [ 208, 7, 22, 61, false ],
+            [ 240, 6, 20, 62, false ]
+          ],
+          "speed": 0.5
+        }, //UP
+        {
+          "animations": [
+            [ 8, 79, 31, 61, false ],
+            [ 48, 84, 35, 56, false ]
+          ],
+          "speed": 0.2
+        }, //PUNCH
+        {
+          "animations": [
+            [ 96, 85, 28, 55, false ],
+            [ 136, 80, 35, 60, false ]
+          ],
+          "speed": 0.5
+        } //KICK
+      ]
     }
   },
   "fadeToBlack": {
