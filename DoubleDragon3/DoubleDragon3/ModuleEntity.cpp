@@ -30,7 +30,6 @@ bool ModuleEntity::Start()
 		players[0]->Enable();
 	if (playerStart[1])
 		players[1]->Enable();
-
 	for (list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret; ++it)
 		if ((*it)->IsEnabled())
 			(*it)->Start();
@@ -76,7 +75,6 @@ bool ModuleEntity::CleanUp()
 
 void ModuleEntity::OrderByZ( int pIni, int pEnd)
 {
-	vector<Entity*> ret;
 	if (pEnd - pIni > 1)  {
 		int pMiddle = (pEnd - pIni) / 2;
 		pMiddle += pIni;
@@ -84,7 +82,7 @@ void ModuleEntity::OrderByZ( int pIni, int pEnd)
 		OrderByZ( ++pMiddle, pEnd);
 		int i = pIni;
 		int j = pMiddle;
-		while (i < pMiddle && j < pEnd)
+		while (i < pMiddle && j <= pEnd)
 		{
 			if (entitiesZOrder[j]->isZLower(entitiesZOrder[i])) {
 				Entity* aux = entitiesZOrder[j];
@@ -94,6 +92,7 @@ void ModuleEntity::OrderByZ( int pIni, int pEnd)
 				entitiesZOrder[i] = aux;
 				++i;
 				++j;
+				++pMiddle;
 			}
 			else {
 				++i;

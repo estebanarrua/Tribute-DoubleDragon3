@@ -38,7 +38,7 @@
     "start": [40, 14 ],
     "player1": {
       "graphics": "Sprites/billy_jimmy.png",
-      "position": [ 116, 128 ],
+      "position": [ 116, 127, 13 ],
       "keys": [ 26, 22, 7, 4, 9, 10, 11, 40, 44 ],
       "movements": [
         {
@@ -100,7 +100,7 @@
     },
     "player2": {
       "graphics": "Sprites/billy_jimmy.png",
-      "position": [ 116, 128 ],
+      "position": [ 116, 127, 13 ],
       "keys": [ 82, 81, 79, 80, 12, 18, 19, 14, 15 ],
       "movements": [
         {
@@ -162,7 +162,7 @@
     },
     "enemy1": {
       "graphics": "Sprites/enemies.png",
-      "position": [ 200, 128 ],
+      "position": [ 200, 127, 13 ],
       "movements": [
         {
           "animations": [ [ 8, 8, 26, 60, false ] ],

@@ -10,6 +10,7 @@ Enemy::Enemy(CONFIG_OBJECT config) : Entity(config)
 	CONFIG_ARRAY aPosition = CONFIG_OBJECT_ARRAY(config, "position");
 	position.x = (int)(CONFIG_ARRAY_NUMBER(aPosition, 0));
 	position.y = (int)(CONFIG_ARRAY_NUMBER(aPosition, 1));
+	zPosition = (int)(CONFIG_ARRAY_NUMBER(aPosition, 2));
 	CONFIG_ARRAY aMovements = CONFIG_OBJECT_ARRAY(config, "movements");
 	for (unsigned int i = 0; i < CONFIG_ARRAY_COUNT(aMovements); ++i) {
 		CONFIG_OBJECT oMovement = CONFIG_ARRAY_OBJECT(aMovements, i);
