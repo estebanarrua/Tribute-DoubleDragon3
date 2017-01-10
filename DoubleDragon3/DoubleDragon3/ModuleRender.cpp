@@ -4,6 +4,8 @@
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
+#include "ModuleEntity.h"
+#include "Player.h"
 #include "SDL/include/SDL.h"
 
 ModuleRender::ModuleRender(CONFIG_OBJECT config) : Module(config)
@@ -58,19 +60,31 @@ update_status ModuleRender::PreUpdate()
 update_status ModuleRender::Update()
 {
 	// debug camera
-	int speed = 1;
+	int speed = 3 * screenSize;
+	int xMax = 0; 
+	int xMin = screenWidth;
 
-	/*if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->renderer->camera.y += speed;
+	if (App->entitys->players[0]->IsEnabled()) {
+		xMax = App->entitys->players[0]->position.x;
+		xMin = App->entitys->players[0]->position.x;
+	}
+	if (App->entitys->players[1]->IsEnabled() && App->entitys->players[1]->position.x > xMax) {
+		xMax = App->entitys->players[1]->position.x;
+	}
+	if (App->entitys->players[1]->IsEnabled() && App->entitys->players[1]->position.x < xMin) {
+		xMin = App->entitys->players[1]->position.x;
+	}
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->renderer->camera.y -= speed;
-
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->renderer->camera.x += speed;
-
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->renderer->camera.x -= speed;*/
+	if (camera.x + xMax*screenSize > (screenWidth / 4) * 3 * screenSize) {
+		camera.x -= speed;
+		if (camera.x < (-1104+screenWidth) * screenSize)
+			camera.x = (-1104 + screenWidth) * screenSize;
+	}
+	if (camera.x + xMin*screenSize < 27*screenSize) {
+		camera.x += speed;
+		if (camera.x > 0)
+			camera.x = 0;
+	}
 
 	return UPDATE_CONTINUE;
 }

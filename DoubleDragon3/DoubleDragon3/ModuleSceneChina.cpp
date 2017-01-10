@@ -19,10 +19,10 @@ ModuleSceneChina::ModuleSceneChina(CONFIG_OBJECT config, bool start_enabled) : M
 	background.rect.h = 224;
 	background.flip = false;
 
-	tree.rect.x = 0;
-	tree.rect.y = 0;
-	tree.rect.w = 0;
-	tree.rect.h = 0;
+	tree.rect.x = 1119;
+	tree.rect.y = 7;
+	tree.rect.w = 122;
+	tree.rect.h = 225;
 	tree.flip = false;
 }
 
@@ -46,6 +46,13 @@ update_status ModuleSceneChina::Update()
 {
 	App->renderer->Blit(graphics, 0, 0, &background, 1.0f);
 	
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleSceneChina::PostUpdate()
+{
+	App->renderer->Blit(graphics, 607, 0, &tree, 1.0f);
+
 	return UPDATE_CONTINUE;
 }
 

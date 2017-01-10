@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include "Point.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;

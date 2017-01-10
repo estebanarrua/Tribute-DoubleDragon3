@@ -67,8 +67,8 @@ update_status Player::Update()
 		{
 			playerState = WALK;
 			jDirection = LEFT;
-			position.x -= speed;
 			draw = movements[WALK].GetCurrentFrame();
+			ChangeXPosition(-speed);
 			if (!flip)
 				position.x += draw.rect.w;
 			flip = true;
@@ -77,7 +77,7 @@ update_status Player::Update()
 		{
 			playerState = WALK;
 			jDirection = RIGHT;
-			position.x += speed;
+			ChangeXPosition(speed);
 			draw = movements[WALK].GetCurrentFrame();
 			if (flip)
 				position.x -= draw.rect.w;
@@ -151,6 +151,19 @@ bool Player::CleanUp()
 	return true;
 }
 
+void Player::ChangeXPosition(int diff)
+{
+	position.x += diff;
+	if (flip && position.x < 27)
+		position.x = 27;
+	if (!flip && position.x < 0)
+		position.x = 0;
+	if (!flip && position.x > (1104 - 27))
+		position.x = 1104 - 27;
+	if (flip && position.x > (1104))
+		position.x = 1104;
+}
+
 Frame Player::Jump(eDirection d)
 {
 	const int maxCount = 7;
@@ -167,7 +180,7 @@ Frame Player::Jump(eDirection d)
 	}
 	else 
 	{
-		position.x += xSpeed;
+		ChangeXPosition(xSpeed);
 		position.y += ySpeed;
 		if (position.y <= yPosition + maxCount * ySpeed)
 			ySpeed = 3;

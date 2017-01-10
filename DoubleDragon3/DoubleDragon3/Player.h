@@ -69,6 +69,7 @@ public:
 	bool CleanUp();
 
 private:
+	void ChangeXPosition(int diff);
 	Frame Jump(eDirection d);
 	Frame Punch();
 	Frame Kick();
