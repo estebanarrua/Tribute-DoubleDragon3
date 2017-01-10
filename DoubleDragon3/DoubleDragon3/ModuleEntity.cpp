@@ -7,6 +7,9 @@ using namespace std;
 
 ModuleEntity::ModuleEntity(CONFIG_OBJECT config, bool start_enabled) : Module(config, start_enabled)
 {
+	CONFIG_ARRAY aMaxEnemies = CONFIG_OBJECT_ARRAY(config, "maxEnemies");
+	maxEnemies[0] = (int)(CONFIG_ARRAY_NUMBER(aMaxEnemies, 0));
+	maxEnemies[1] = (int)(CONFIG_ARRAY_NUMBER(aMaxEnemies, 1));
 	Player* player1 = new Player(CONFIG_OBJECT_OBJECT(config, "player1"));
 	entities.push_back((Entity*)player1);
 	players.push_back(player1);
@@ -39,6 +42,18 @@ bool ModuleEntity::Start()
 
 update_status ModuleEntity::PreUpdate()
 {
+	int max = maxEnemies[0];
+	if (players[0]->IsEnabled() && players[1]->IsEnabled())
+		max = maxEnemies[1];
+	if (enemiesAlive < max) {
+		enemiesAlive++;
+		Entity* enemy = new Enemy(CONFIG_OBJECT_OBJECT(config, "enemy1"));
+		enemy->Enable();
+		enemy->position.x += players[0]->position.x;
+		enemy->position.y = players[0]->position.y;
+		enemy->zPosition = players[0]->zPosition;
+		entities.push_back(enemy);
+	}
 	entitiesZOrder.clear();
 	for (list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
 		if ((*it)->IsEnabled())
@@ -47,7 +62,6 @@ update_status ModuleEntity::PreUpdate()
 
 	return UPDATE_CONTINUE;
 }
-
 
 
 update_status ModuleEntity::Update()

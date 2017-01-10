@@ -53,15 +53,10 @@ update_status ModuleRender::PreUpdate()
 {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(renderer);
-	return UPDATE_CONTINUE;
-}
 
-// Called every draw update
-update_status ModuleRender::Update()
-{
 	// debug camera
 	int speed = 3 * screenSize;
-	int xMax = 0; 
+	int xMax = 0;
 	int xMin = screenWidth;
 
 	if (App->entitys->players[0]->IsEnabled()) {
@@ -75,17 +70,23 @@ update_status ModuleRender::Update()
 		xMin = App->entitys->players[1]->position.x;
 	}
 
-	if (camera.x + xMax*screenSize > (screenWidth / 4) * 3 * screenSize) {
+	if (camera.x + xMax*screenSize >(screenWidth / 4) * 3 * screenSize) {
 		camera.x -= speed;
-		if (camera.x < (-1104+screenWidth) * screenSize)
+		if (camera.x < (-1104 + screenWidth) * screenSize)
 			camera.x = (-1104 + screenWidth) * screenSize;
 	}
-	if (camera.x + xMin*screenSize < 27*screenSize) {
+	if (camera.x + xMin*screenSize < 27 * screenSize) {
 		camera.x += speed;
 		if (camera.x > 0)
 			camera.x = 0;
 	}
 
+	return UPDATE_CONTINUE;
+}
+
+// Called every draw update
+update_status ModuleRender::Update()
+{
 	return UPDATE_CONTINUE;
 }
 

@@ -10,6 +10,10 @@ class Player;
 
 class ModuleEntity : public Module
 {
+private:
+	int maxEnemies[2];
+	int enemiesAlive = 0;
+	
 public:
 	std::vector<Player*> players;
 	std::list<Entity*> entities;

@@ -42,16 +42,16 @@ bool ModuleSceneChina::Start()
 	return true;
 }
 
-update_status ModuleSceneChina::Update()
+update_status ModuleSceneChina::PreUpdate()
 {
 	App->renderer->Blit(graphics, 0, 0, &background, 1.0f);
 	
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleSceneChina::PostUpdate()
+update_status ModuleSceneChina::Update()
 {
-	App->renderer->Blit(graphics, 607, 0, &tree, 1.0f);
+	App->renderer->Blit(graphics, 599, 0, &tree, 1.0f);
 
 	return UPDATE_CONTINUE;
 }

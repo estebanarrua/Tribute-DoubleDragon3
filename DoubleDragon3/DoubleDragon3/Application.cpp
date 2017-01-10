@@ -27,9 +27,9 @@ Application::Application()
 	modules.push_back(audio = new ModuleAudio(CONFIG_OBJECT_OBJECT(configObj, "audio")));
 
 	// Game Modules
-	modules.push_back(scene_china = new ModuleSceneChina(CONFIG_OBJECT_OBJECT(configObj, "sceneChina"), false));
 	modules.push_back(scene_init = new ModuleSceneInit(CONFIG_OBJECT_OBJECT(configObj, "sceneInit"), true));
 	modules.push_back(entitys = new ModuleEntity(CONFIG_OBJECT_OBJECT(configObj, "entitys"), false));
+	modules.push_back(scene_china = new ModuleSceneChina(CONFIG_OBJECT_OBJECT(configObj, "sceneChina"), false));
 	modules.push_back(fade = new ModuleFadeToBlack(CONFIG_OBJECT_OBJECT(configObj, "fadeToBlack")));
 }
 

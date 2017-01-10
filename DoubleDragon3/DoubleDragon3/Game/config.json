@@ -35,7 +35,8 @@
   "sceneChina": {
   },
   "entitys": {
-    "start": [40, 14 ],
+    "start": [ 40, 14 ],
+    "maxEnemies": [ 3, 4],
     "player1": {
       "graphics": "Sprites/billy_jimmy.png",
       "position": [ 117, 127, 13 ],
@@ -162,7 +163,7 @@
     },
     "enemy1": {
       "graphics": "Sprites/enemies.png",
-      "position": [ 200, 127, 13 ],
+      "position": [ 400, 0, 0 ],
       "movements": [
         {
           "animations": [ [ 8, 8, 26, 60, false ] ],
