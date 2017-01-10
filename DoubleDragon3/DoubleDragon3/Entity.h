@@ -9,6 +9,8 @@ struct SDL_Texture;
 class Entity
 {
 
+private:
+	bool active;
 public:
 	CONFIG_OBJECT config;
 	iPoint position;
@@ -16,11 +18,32 @@ public:
 	SDL_Texture* graphics = nullptr;
 
 public:
-	Entity(CONFIG_OBJECT config, bool flip = false) : config(config), flip(flip)
+	Entity(CONFIG_OBJECT config, bool active = false, bool flip = false) : config(config), active(active), flip(flip)
 	{}
 
 	virtual ~Entity()
 	{}
+	
+	bool IsEnabled() const
+	{
+		return active;
+	}
+
+	bool Enable()
+	{
+		if (active == false)
+			return active = Start();
+
+		return true;
+	}
+
+	bool Disable()
+	{
+		if (active == true)
+			return !(active = !CleanUp());
+
+		return true;
+	}
 
 	virtual bool Init()
 	{

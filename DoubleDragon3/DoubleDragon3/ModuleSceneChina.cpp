@@ -6,6 +6,7 @@
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
+#include "ModuleEntity.h"
 #include "SDL/include/SDL.h"
 
 
@@ -35,6 +36,8 @@ bool ModuleSceneChina::Start()
 	graphics = App->textures->Load("Sprites/china_scene.png");
 
 	App->audio->PlayMusic("Music/03-in-china.ogg");
+
+	App->entitys->Enable();
 
 	return true;
 }

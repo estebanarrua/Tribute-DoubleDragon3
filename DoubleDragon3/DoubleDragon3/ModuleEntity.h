@@ -2,12 +2,16 @@
 #define __MODULEENTITY_H__
 
 #include <list>
+#include <vector>
 #include "Module.h"
 #include "Entity.h"
+
+class Player;
 
 class ModuleEntity : public Module
 {
 public:
+	std::vector<Player*> players;
 	std::list<Entity*> entities;
 
 public:

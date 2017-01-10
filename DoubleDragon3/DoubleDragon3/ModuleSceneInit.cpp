@@ -145,8 +145,11 @@ update_status ModuleSceneInit::Update()
 		}
 	}
 	if (startPressed != -1) {
+
 		App->scene_china->player[startPressed] = true;
-		App->fade->FadeToBlack(App->scene_china, this, 0.0f);
+		if (!App->scene_china->Enable() || !this->Disable()) {
+			return UPDATE_ERROR;
+		}
 		startPressed = -1;
 	}
 	return UPDATE_CONTINUE;

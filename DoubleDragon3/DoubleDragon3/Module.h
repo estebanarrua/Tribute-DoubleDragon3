@@ -36,7 +36,7 @@ public:
 	 bool Disable()
 	 {
 		 if(active == true)
-			 return active = !CleanUp();
+			 return !(active = !CleanUp());
 
 		 return true;
 	 }
