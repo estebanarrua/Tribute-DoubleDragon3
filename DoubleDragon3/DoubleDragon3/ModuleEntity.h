@@ -13,7 +13,6 @@ class ModuleEntity : public Module
 {
 private:
 	int maxEnemies[2];
-	int enemiesAlive = 0;
 	
 public:
 	std::vector<Player*> players;
@@ -30,6 +29,7 @@ public:
 	bool Start();
 	update_status PreUpdate();
 	update_status Update();
+	update_status PostUpdate();
 	bool CleanUp();
 
 private:

@@ -36,7 +36,7 @@ Enemy::Enemy(CONFIG_OBJECT config) : Entity(config)
 
 Enemy::~Enemy()
 {
-
+	CleanUp();
 }
 
 bool Enemy::Start()
@@ -150,11 +150,21 @@ update_status Enemy::Update()
 	return UPDATE_CONTINUE;
 }
 
+update_status Enemy::PostUpdate() {
+	if (imDead)
+		this->to_delete = true;
+	return UPDATE_CONTINUE;
+}
+
 bool Enemy::CleanUp()
 {
 	LOG("Unloading enemy");
 
 	App->textures->Unload(graphics);
+
+	if (collider != nullptr)
+		collider->to_delete = true;
+	collider = nullptr;
 
 	return true;
 }

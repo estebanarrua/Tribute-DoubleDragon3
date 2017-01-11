@@ -22,9 +22,10 @@ public:
 	Collider* collider = nullptr;
 	int totalLife;
 	int life;
+	bool to_delete;
 
 public:
-	Entity(CONFIG_OBJECT config, bool active = false, bool flip = false) : config(config), active(active), flip(flip)
+	Entity(CONFIG_OBJECT config, bool active = false, bool flip = false) : config(config), active(active), flip(flip), to_delete(false)
 	{}
 
 	virtual ~Entity()

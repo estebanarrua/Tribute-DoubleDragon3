@@ -59,17 +59,37 @@ update_status ModuleEntity::PreUpdate()
 			players[1]->Enable();
 
 	entitiesZOrder.clear();
-	for (list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
-		if ((*it)->IsEnabled()) {
-			(*it)->PreUpdate();
-			entitiesZOrder.push_back((*it));
+
+	for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end();) {
+		if ((*it)->to_delete == true)
+		{
+			it = enemies.erase(it);
 		}
+		else {
+			++it;
+		}
+	}
+
+	for (list<Entity*>::iterator it = entities.begin(); it != entities.end();)
+	{
+		if ((*it)->to_delete == true)
+		{
+			RELEASE(*it);
+			it = entities.erase(it);
+		}
+		else {
+			if ((*it)->IsEnabled()) {
+				(*it)->PreUpdate();
+				entitiesZOrder.push_back((*it));
+			}
+			++it;
+		}
+	}
 			
 	OrderByZ( 0, entitiesZOrder.size() - 1);
 
 	return UPDATE_CONTINUE;
 }
-
 
 update_status ModuleEntity::Update()
 {
@@ -78,6 +98,16 @@ update_status ModuleEntity::Update()
 	for (vector<Entity*>::iterator it = entitiesZOrder.begin(); it != entitiesZOrder.end() && ret == UPDATE_CONTINUE; ++it)
 		if((*it)->IsEnabled())
 			ret = (*it)->Update();
+
+	return ret;
+}
+
+update_status ModuleEntity::PostUpdate() {
+	update_status ret = UPDATE_CONTINUE;
+
+	for (list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UPDATE_CONTINUE; ++it)
+		if ((*it)->IsEnabled())
+			ret = (*it)->PostUpdate();
 
 	return ret;
 }
@@ -139,8 +169,7 @@ void ModuleEntity::GenerateEnemies()
 	int max = maxEnemies[0];
 	if (players[0]->IsEnabled() && players[1]->IsEnabled())
 		max = maxEnemies[1];
-	if (enemiesAlive < max) {
-		enemiesAlive++;
+	if (enemies.size() < max) {
 		Entity* enemy = new Enemy(CONFIG_OBJECT_OBJECT(config, "enemy1"));
 		enemy->Enable();
 		enemy->position.x += players[0]->position.x;
