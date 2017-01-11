@@ -49,6 +49,7 @@ bool Enemy::Start()
 
 	SDL_Rect colRect = { position.x, zPosition - 1, movements[IDLE].GetCurrentFrame().rect.w, 3 };
 	collider = App->collisions->AddCollider(colRect, ENEMY);
+	imDead = false;
 	return true;
 }
 
@@ -192,3 +193,73 @@ Frame Enemy::Kick()
 	}
 	return movements[E_KICK].GetCurrentFrame();
 }
+
+//Frame Enemy::ReciveHit()
+//{
+//	static int count = 5;
+//	if (enemyState != E_PUNCH_RECIVE && enemyState != E_KICK_RECIVE) {
+//		totalLife -= 10;
+//		life -= 10;
+//		if (collider->tCollided == P_C_FLYKICK) {
+//			return Dead();
+//		}
+//		else if(collider->tCollided == P_C_PUNCH) {
+//			enemyState = E_PUNCH_RECIVE;
+//		}
+//		else {
+//			enemyState = E_KICK_RECIVE;
+//		}
+//	}
+//	else {
+//		--count;
+//		if (count == 0) {
+//			if (totalLife <= 0) {
+//				enemyState = E_DEAD;
+//			}
+//			else
+//				enemyState = E_IDLE;
+//			count = 5;
+//		}
+//	}
+//
+//	return movements[enemyState].GetCurrentFrame();
+//}
+//
+//Frame Enemy::Dead()
+//{
+//	static int countFall = 20;
+//	static int countFloor = 5;
+//	Frame ret = movements[E_DEAD].frames[0];
+//	if (enemyState != E_DEAD) {
+//		enemyState = E_DEAD;
+//		position.y -= 10;
+//	}
+//	else {
+//		--countFall;
+//		if (countFall > 0) {
+//			if (flip)
+//				position.x += 9;
+//			else
+//				position.x -= 9;
+//			--countFall;
+//		}
+//		else {
+//			position.y += 10;
+//			ret = movements[E_DEAD].frames[1];
+//			if (countFloor > 0) {
+//				--countFloor;
+//			}
+//			else {
+//				if (totalLife > 0) {
+//					enemyState = E_IDLE;
+//				}
+//				else {
+//					imDead = true;
+//				}
+//				countFall = 20;
+//				countFloor = 5;
+//			}
+//		}
+//	}
+//	return ret;
+//}

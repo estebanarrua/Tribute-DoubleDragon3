@@ -26,8 +26,11 @@ update_status ModuleCollision::PreUpdate()
 			RELEASE(*it);
 			it = colliders.erase(it);
 		}
-		else
+		else {
+			(*it)->collided = false;
+			(*it)->tCollided.clear();
 			++it;
+		}
 	}
 
 	return UPDATE_CONTINUE;
@@ -44,13 +47,9 @@ update_status ModuleCollision::Update()
 				if ((*it1)->CheckCollision((*it2)->rect)) 
 				{
 					(*it1)->collided = true;
-					(*it1)->tCollided = (*it2)->type;
+					(*it1)->tCollided.push_back((*it2)->type);
 					(*it2)->collided = true;
-					(*it2)->tCollided = (*it1)->type;
-				}
-				else {
-					(*it1)->collided = false;
-					(*it2)->collided = false;
+					(*it2)->tCollided.push_back((*it1)->type);
 				}
 			++it2;
 		}

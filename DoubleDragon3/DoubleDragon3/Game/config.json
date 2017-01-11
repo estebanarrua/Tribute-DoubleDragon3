@@ -188,7 +188,7 @@
     "enemy1": {
       "graphics": "Sprites/enemies.png",
       "position": [ 400, 0, 0 ],
-      "lifes": [ 40, 20],
+      "lifes": [ 30, 30],
       "movements": [
         {
           "animations": [ [ 8, 8, 26, 60, false ] ],
@@ -227,6 +227,21 @@
             [ 96, 85, 28, 55, false ]
           ],
           "speed": 0.5
+        },
+        {
+          "animations": [ [ 184, 80, 26, 60, false ] ],
+          "speed": 0.0
+        },
+        {
+          "animations": [ [ 224, 80, 22, 60, false ] ],
+          "speed": 0.0
+        },
+        {
+          "animations": [
+            [ 224, 80, 22, 60, false ],
+            [ 256, 80, 52, 60, false ]
+          ],
+          "speed": 0.0
         } 
       ]
     }

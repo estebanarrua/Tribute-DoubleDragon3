@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Animation.h"
+#include "ModuleCollision.h"
 
 enum eMovements
 {
@@ -69,12 +70,13 @@ public:
 
 private:
 	void ChangeXPosition(int diff);
-	Frame Jump(eDirection d);
+	Frame Jump(eDirection d, ColliderType collision);
 	Frame Punch();
 	Frame Kick();
-	Frame ReciveHit();
+	Frame ReciveHit(ColliderType collision);
 	Frame Dead();
 	Frame StandUp();
+	ColliderType AttackMe();
 };
 
 #endif //PLAYER

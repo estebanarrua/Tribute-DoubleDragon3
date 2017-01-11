@@ -11,6 +11,9 @@ enum eMovEnemy
 	E_UP,
 	E_PUNCH,
 	E_KICK,
+	E_PUNCH_RECIVE,
+	E_KICK_RECIVE,
+	E_DEAD,
 
 	E_MOVEMENTS_COUNT
 };
@@ -19,6 +22,9 @@ class Player;
 
 class Enemy : public Entity
 {
+
+private:
+	bool imDead;
 
 public:
 	//Movements
@@ -36,6 +42,8 @@ public:
 private:
 	Frame Punch();
 	Frame Kick();
+	//Frame ReciveHit();
+	//Frame Dead();
 };
 
 #endif //__ENEMY_H__

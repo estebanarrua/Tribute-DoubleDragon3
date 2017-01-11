@@ -6,7 +6,7 @@
 
 struct SDL_Texture;
 
-class Collider;
+struct Collider;
 
 class Entity
 {

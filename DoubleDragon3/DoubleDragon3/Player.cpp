@@ -61,6 +61,7 @@ bool Player::Start()
 	imDead = false;
 	isUntouchable = true;
 	timeUntouchable = App->timer->lastTime;
+	playerState = IDLE;
 	return true;
 }
 
@@ -86,13 +87,16 @@ update_status Player::Update()
 			invisible = false;
 		}
 	}
+	
+	ColliderType collision = AttackMe();
 
 	switch (playerState)
 	{
 	case IDLE:
 	case WALK:
-		if (collider->collided && collider->tCollided != ENEMY && !isUntouchable) {
-			draw = ReciveHit();
+		
+		if (collision != PLAYER && !isUntouchable) {
+			draw = ReciveHit(collision);
 		}
 		else {
 			if (App->input->GetKey(keys[K_LEFT]) == KEY_REPEAT)
@@ -136,7 +140,7 @@ update_status Player::Update()
 
 			if (App->input->GetKey(keys[K_B]) == KEY_DOWN)
 			{
-				draw = Jump(jDirection);
+				draw = Jump(jDirection, collision);
 			}
 			if (App->input->GetKey(keys[K_A]) == KEY_DOWN)
 			{
@@ -154,7 +158,7 @@ update_status Player::Update()
 		{
 			playerState = FLY_KICK;
 		}
-		draw = Jump(jDirection);
+		draw = Jump(jDirection, collision);
 		break;
 	case PUNCH:
 		draw = Punch();
@@ -164,7 +168,7 @@ update_status Player::Update()
 		break;
 	case PUNCH_RECIVE:
 	case KICK_RECIVE:
-		draw = ReciveHit();
+		draw = ReciveHit(collision);
 		break;
 	case DEAD:
 		draw = Dead();
@@ -202,6 +206,10 @@ bool Player::CleanUp()
 
 	App->textures->Unload(graphics);
 
+	if (collider != nullptr)
+		collider->to_delete = true;
+	collider = nullptr;
+
 	return true;
 }
 
@@ -218,12 +226,14 @@ void Player::ChangeXPosition(int diff)
 		position.x = 1104;
 }
 
-Frame Player::Jump(eDirection d)
+Frame Player::Jump(eDirection d, ColliderType collision)
 {
 	const int maxCount = 7;
 	static int ySpeed = -3;
 	static int xSpeed = 0;
 	static int yPosition = 0;
+	static Collider* collider = nullptr;
+
 	if (playerState != JUMP && playerState != FLY_KICK) {
 		playerState = JUMP;
 		if(d == RIGHT)
@@ -234,8 +244,8 @@ Frame Player::Jump(eDirection d)
 	}
 	else 
 	{
-		if (collider->collided && collider->tCollided != ENEMY && !isUntouchable) {
-			if (collider->tCollided == E_C_PUNCH) {
+		if (!isUntouchable && collision !=  PLAYER ) {
+			if (collision == E_C_PUNCH) {
 				totalLife -= 20;
 				life -= 20;
 			}
@@ -244,10 +254,22 @@ Frame Player::Jump(eDirection d)
 				life -= 30;
 			}
 			position.y = yPosition;
+			if (collider != nullptr) {
+				collider->to_delete = true;
+				collider = nullptr;
+			}
 			return Dead();
 		}
 		else 
 		{
+			if (playerState == FLY_KICK && collider == nullptr) {
+				int xCol = 0;
+				if (flip)
+					xCol = position.x - movements[IDLE].GetCurrentFrame().rect.w - 9;
+				else
+					xCol = position.x + movements[IDLE].GetCurrentFrame().rect.w;
+				collider = App->collisions->AddCollider({ xCol,zPosition - 1,9,3 }, P_C_FLYKICK);
+			}
 			ChangeXPosition(xSpeed);
 			position.y += ySpeed;
 			if (position.y <= yPosition + maxCount * ySpeed)
@@ -257,6 +279,10 @@ Frame Player::Jump(eDirection d)
 				playerState = IDLE;
 				xSpeed = 0;
 				ySpeed = -3;
+				if (collider != nullptr) {
+					collider->to_delete = true;
+					collider = nullptr;
+				}
 			}
 		}
 	}
@@ -291,23 +317,33 @@ Frame Player::Punch()
 Frame Player::Kick()
 {
 	static int count = 0;
+	static Collider* collider = nullptr;
 	if (playerState != KICK) {
 		playerState = KICK;
 		count = 0;
+		int xCol = 0;
+		if (flip)
+			xCol = position.x - movements[IDLE].GetCurrentFrame().rect.w - 6;
+		else
+			xCol = position.x + movements[IDLE].GetCurrentFrame().rect.w;
+		collider = App->collisions->AddCollider({ xCol,zPosition - 1,6,3 }, P_C_KICK);
 	}
 	else {
 		++count;
-		if (count >= 5)
+		if (count >= 5) {
 			playerState = IDLE;
+			collider->to_delete = true;
+			collider = nullptr;
+		}
 	}
 	return movements[KICK].GetCurrentFrame();
 }
 
-Frame Player::ReciveHit()
+Frame Player::ReciveHit(ColliderType collision)
 {
 	static int count = 5;
 	if (playerState != PUNCH_RECIVE && playerState != KICK_RECIVE) {
-		if (collider->tCollided == E_C_PUNCH) {
+		if (collision == E_C_PUNCH) {
 			playerState = PUNCH_RECIVE;
 			totalLife -= 20;
 			life -= 20;
@@ -381,4 +417,13 @@ Frame Player::StandUp() {
 		timeUntouchable = App->timer->lastTime;
 	}
 	return movements[playerState].GetCurrentFrame();
+}
+
+ColliderType Player::AttackMe() {
+	ColliderType ret = PLAYER;
+	if (this->collider->collided) 
+		for (unsigned int i = 0; i < this->collider->tCollided.size() && ret == PLAYER; ++i)
+			if (this->collider->tCollided[i] != ENEMY)
+				ret = this->collider->tCollided[i];
+	return ret;
 }

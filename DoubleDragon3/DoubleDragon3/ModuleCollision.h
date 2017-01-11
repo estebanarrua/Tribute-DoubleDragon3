@@ -2,6 +2,7 @@
 #define __ModuleCollision_H__
 
 #include<list>
+#include<vector>
 #include "Module.h"
 
 enum ColliderType
@@ -12,16 +13,19 @@ enum ColliderType
 	E_C_PUNCH,
 	P_C_KICK,
 	E_C_KICK,
+	P_C_FLYKICK,
 
 	MAX_COLAIDERS
 };
-															/*PLAYER  ENEMY  P_PUNCH  E_PUNCH  P_KICK  E_KICK  */
-const bool ColliderMatrix[MAX_COLAIDERS][MAX_COLAIDERS] = { { false,  true,  false,   true,    false,  true },      //PLAYER
-															{ true,   false, true,    false,   true,   false},		//ENEMY
-															{ false,  true,  false,   false,   false,  false},		//P_PUNCH
-															{ true,   false, false,   false,   false,  false},		//E_PUNCH
-															{ false,  true,  false,   false,   false,  false},		//P_KICK
-															{ true,   false, false,   false,   false,  false}};	//E_KICK
+															/*PLAYER  ENEMY  P_PUNCH  E_PUNCH  P_KICK  E_KICK  P_C_FLYKICK  */
+const bool ColliderMatrix[MAX_COLAIDERS][MAX_COLAIDERS] = { { false,  true,  false,   true,    false,  true,   false },      //PLAYER
+															{ true,   false, true,    false,   true,   false,  true},		//ENEMY
+															{ false,  true,  false,   false,   false,  false,  false},		//P_PUNCH
+															{ true,   false, false,   false,   false,  false,  false},		//E_PUNCH
+															{ false,  true,  false,   false,   false,  false,  false},		//P_KICK
+															{ true,   false, false,   false,   false,  false,  false },		//E_KICK
+															{ false,  true,  false,   false,   false,  false,  false}};	    //P_FLYKICK
+
 															
 
 struct Collider
@@ -30,10 +34,10 @@ struct Collider
 	ColliderType type;
 	bool to_delete = false;
 	bool collided = false;
-	ColliderType tCollided;
+	std::vector<ColliderType> tCollided;
 	
 	Collider(SDL_Rect rectangle, ColliderType type) : // expand this call if you need to
-		rect(rectangle), type(type), tCollided(type)
+		rect(rectangle), type(type)
 	{}
 
 	void SetPos(int x, int y)
