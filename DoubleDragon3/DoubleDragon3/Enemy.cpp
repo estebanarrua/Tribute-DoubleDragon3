@@ -3,6 +3,7 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
+#include "ModuleAudio.h"
 #include "Player.h"
 
 
@@ -45,6 +46,10 @@ bool Enemy::Start()
 
 	graphics = App->textures->Load(CONFIG_OBJECT_STRING(config, "graphics"));
 	target = nullptr;
+
+	soundHit = App->audio->LoadFx(CONFIG_OBJECT_STRING(config, "sHit"));
+	soundJump = App->audio->LoadFx(CONFIG_OBJECT_STRING(config, "sJump"));
+	soundDead = App->audio->LoadFx(CONFIG_OBJECT_STRING(config, "sDead"));
 
 	CONFIG_ARRAY aLifes = CONFIG_OBJECT_ARRAY(config, "lifes");
 	totalLife = (int)(CONFIG_ARRAY_NUMBER(aLifes, 0));
@@ -178,6 +183,7 @@ Frame Enemy::Punch()
 	static int count = 0;
 	static Collider* collider = nullptr;
 	if (enemyState != E_PUNCH) {
+		App->audio->PlayFx(soundHit);
 		enemyState = E_PUNCH;
 		count = 0;
 		int xCol = 0;
@@ -204,6 +210,7 @@ Frame Enemy::Kick()
 	static int count = 0;
 	static Collider* collider = nullptr;
 	if (enemyState != E_KICK) {
+		App->audio->PlayFx(soundHit);
 		enemyState = E_KICK;
 		count = 0;
 		int xCol = 0;
@@ -281,6 +288,7 @@ Frame Enemy::Dead()
 				--countFloor;
 			}
 			else {
+				App->audio->PlayFx(soundDead);
 				if (totalLife > 0) {
 					enemyState = E_IDLE;
 				}

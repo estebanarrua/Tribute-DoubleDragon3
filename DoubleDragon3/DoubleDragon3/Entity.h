@@ -23,6 +23,9 @@ public:
 	int totalLife;
 	int life;
 	bool to_delete;
+	int soundJump = 0;
+	int soundHit = 0;
+	int soundDead = 0;
 
 public:
 	Entity(CONFIG_OBJECT config, bool active = false, bool flip = false) : config(config), active(active), flip(flip), to_delete(false)

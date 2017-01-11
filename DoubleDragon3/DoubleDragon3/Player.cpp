@@ -5,6 +5,7 @@
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
 #include "ModuleTimer.h"
+#include "ModuleAudio.h"
 
 
 Player::Player(CONFIG_OBJECT config) : Entity(config)
@@ -43,6 +44,7 @@ Player::Player(CONFIG_OBJECT config) : Entity(config)
 
 Player::~Player()
 {
+	CleanUp();
 }
 
 bool Player::Start()
@@ -52,6 +54,11 @@ bool Player::Start()
 	graphics = App->textures->Load(CONFIG_OBJECT_STRING(config, "graphics"));
 	SDL_Rect colRect = {position.x, zPosition - 1, movements[IDLE].GetCurrentFrame().rect.w, 3 };
 	collider = App->collisions->AddCollider(colRect,PLAYER);
+
+	soundHit = App->audio->LoadFx(CONFIG_OBJECT_STRING(config, "sHit"));
+	soundJump = App->audio->LoadFx(CONFIG_OBJECT_STRING(config, "sJump"));
+	soundDead = App->audio->LoadFx(CONFIG_OBJECT_STRING(config, "sDead"));
+
 
 	CONFIG_ARRAY aLifes = CONFIG_OBJECT_ARRAY(config, "lifes");
 	totalLife = (int)(CONFIG_ARRAY_NUMBER(aLifes, 0));
@@ -158,6 +165,7 @@ update_status Player::Update()
 		if (App->input->GetKey(keys[K_C]) == KEY_DOWN)
 		{
 			playerState = FLY_KICK;
+			App->audio->PlayFx(soundHit);
 		}
 		draw = Jump(jDirection, collision);
 		break;
@@ -236,6 +244,7 @@ Frame Player::Jump(eDirection d, ColliderType collision)
 	static Collider* collider = nullptr;
 
 	if (playerState != JUMP && playerState != FLY_KICK) {
+		App->audio->PlayFx(soundJump);
 		playerState = JUMP;
 		if(d == RIGHT)
 			xSpeed = 6;
@@ -293,6 +302,7 @@ Frame Player::Punch()
 	static int count = 0;
 	static Collider* collider = nullptr;
 	if (playerState != PUNCH) {
+		App->audio->PlayFx(soundHit);
 		playerState = PUNCH;
 		count = 0;
 		int xCol = 0;
@@ -319,6 +329,7 @@ Frame Player::Kick()
 	static int count = 0;
 	static Collider* collider = nullptr;
 	if (playerState != KICK) {
+		App->audio->PlayFx(soundHit);
 		playerState = KICK;
 		count = 0;
 		int xCol = 0;
@@ -394,6 +405,7 @@ Frame Player::Dead()
 				--countFloor;
 			}
 			else {
+				App->audio->PlayFx(soundDead);
 				if (totalLife > 0) {
 					playerState = STAND_UP;
 				}
