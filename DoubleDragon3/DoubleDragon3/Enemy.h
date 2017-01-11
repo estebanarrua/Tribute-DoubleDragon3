@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Animation.h"
+#include "ModuleCollision.h"
 
 enum eMovEnemy
 {
@@ -42,8 +43,10 @@ public:
 private:
 	Frame Punch();
 	Frame Kick();
-	//Frame ReciveHit();
-	//Frame Dead();
+	Frame ReciveHit(ColliderType collision);
+	Frame Dead();
+	bool ReachPlayer();
+	ColliderType AttackMe();
 };
 
 #endif //__ENEMY_H__

@@ -50,7 +50,6 @@ bool Player::Start()
 	LOG("Loading player");
 
 	graphics = App->textures->Load(CONFIG_OBJECT_STRING(config, "graphics"));
-
 	SDL_Rect colRect = {position.x, zPosition - 1, movements[IDLE].GetCurrentFrame().rect.w, 3 };
 	collider = App->collisions->AddCollider(colRect,PLAYER);
 

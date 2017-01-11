@@ -35,13 +35,13 @@ bool ModuleEntity::Start()
 	starts[0] = (int)CONFIG_ARRAY_NUMBER(aStart, 0);
 	starts[1] = (int)CONFIG_ARRAY_NUMBER(aStart, 1);
 
+	for (list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret; ++it)
+		if ((*it)->IsEnabled())
+			(*it)->Start();
 	if (playerStart[0])
 		players[0]->Enable();
 	if (playerStart[1])
 		players[1]->Enable();
-	for (list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret; ++it)
-		if ((*it)->IsEnabled())
-			(*it)->Start();
 
 	return ret;
 }

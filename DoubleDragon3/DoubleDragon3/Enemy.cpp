@@ -3,7 +3,6 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
-#include "ModuleCollision.h"
 #include "Player.h"
 
 
@@ -47,6 +46,10 @@ bool Enemy::Start()
 	graphics = App->textures->Load(CONFIG_OBJECT_STRING(config, "graphics"));
 	target = nullptr;
 
+	CONFIG_ARRAY aLifes = CONFIG_OBJECT_ARRAY(config, "lifes");
+	totalLife = (int)(CONFIG_ARRAY_NUMBER(aLifes, 0));
+	life = (int)(CONFIG_ARRAY_NUMBER(aLifes, 1));
+
 	SDL_Rect colRect = { position.x, zPosition - 1, movements[IDLE].GetCurrentFrame().rect.w, 3 };
 	collider = App->collisions->AddCollider(colRect, ENEMY);
 	imDead = false;
@@ -60,14 +63,18 @@ update_status Enemy::Update()
 	static int punch = 2;
 	static int wait = 5;
 	if (target != nullptr && target->IsEnabled()) {
+		ColliderType collision = AttackMe();
+
 		switch (enemyState)
 		{
 		case E_IDLE:
-			if (!collider->collided) {
+			if (collision != ENEMY) {
+				draw = ReciveHit(collision);
+			}else if (!ReachPlayer()) {
 				enemyState = E_WALK;
 			}
 			else {
-				if (wait == 0) {
+				/*if (wait == 0) {
 					wait = 5;
 					if (punch > 0) {
 						draw = Punch();
@@ -80,11 +87,13 @@ update_status Enemy::Update()
 				}
 				else {
 					--wait;
-				}
+				}*/
 			}
 			break;
 		case E_WALK:
-			if (collider->collided) {
+			if (collision != ENEMY) {
+				draw = ReciveHit(collision);
+			}else if (ReachPlayer()) {
 				enemyState = E_IDLE;
 			}
 			else {
@@ -119,6 +128,13 @@ update_status Enemy::Update()
 			break;
 		case E_KICK:
 			draw = Kick();
+			break;
+		case E_PUNCH_RECIVE:
+		case E_KICK_RECIVE:
+			draw = ReciveHit(collision);
+			break;
+		case E_DEAD:
+			draw = Dead();
 			break;
 		default:
 			break;
@@ -194,72 +210,96 @@ Frame Enemy::Kick()
 	return movements[E_KICK].GetCurrentFrame();
 }
 
-//Frame Enemy::ReciveHit()
-//{
-//	static int count = 5;
-//	if (enemyState != E_PUNCH_RECIVE && enemyState != E_KICK_RECIVE) {
-//		totalLife -= 10;
-//		life -= 10;
-//		if (collider->tCollided == P_C_FLYKICK) {
-//			return Dead();
-//		}
-//		else if(collider->tCollided == P_C_PUNCH) {
-//			enemyState = E_PUNCH_RECIVE;
-//		}
-//		else {
-//			enemyState = E_KICK_RECIVE;
-//		}
-//	}
-//	else {
-//		--count;
-//		if (count == 0) {
-//			if (totalLife <= 0) {
-//				enemyState = E_DEAD;
-//			}
-//			else
-//				enemyState = E_IDLE;
-//			count = 5;
-//		}
-//	}
-//
-//	return movements[enemyState].GetCurrentFrame();
-//}
-//
-//Frame Enemy::Dead()
-//{
-//	static int countFall = 20;
-//	static int countFloor = 5;
-//	Frame ret = movements[E_DEAD].frames[0];
-//	if (enemyState != E_DEAD) {
-//		enemyState = E_DEAD;
-//		position.y -= 10;
-//	}
-//	else {
-//		--countFall;
-//		if (countFall > 0) {
-//			if (flip)
-//				position.x += 9;
-//			else
-//				position.x -= 9;
-//			--countFall;
-//		}
-//		else {
-//			position.y += 10;
-//			ret = movements[E_DEAD].frames[1];
-//			if (countFloor > 0) {
-//				--countFloor;
-//			}
-//			else {
-//				if (totalLife > 0) {
-//					enemyState = E_IDLE;
-//				}
-//				else {
-//					imDead = true;
-//				}
-//				countFall = 20;
-//				countFloor = 5;
-//			}
-//		}
-//	}
-//	return ret;
-//}
+Frame Enemy::ReciveHit(ColliderType collision)
+{
+	static int count = 5;
+	if (enemyState != E_PUNCH_RECIVE && enemyState != E_KICK_RECIVE) {
+		totalLife -= 10;
+		life -= 10;
+		if (collision == P_C_FLYKICK) {
+			return Dead();
+		}
+		else if(collision == P_C_PUNCH) {
+			enemyState = E_PUNCH_RECIVE;
+		}
+		else {
+			enemyState = E_KICK_RECIVE;
+		}
+	}
+	else {
+		--count;
+		if (count == 0) {
+			if (totalLife <= 0) {
+				enemyState = E_DEAD;
+			}
+			else
+				enemyState = E_IDLE;
+			count = 5;
+		}
+	}
+
+	return movements[enemyState].GetCurrentFrame();
+}
+
+Frame Enemy::Dead()
+{
+	static int countFall = 20;
+	static int countFloor = 5;
+	static bool down = false;
+	Frame ret = movements[E_DEAD].frames[0];
+	if (enemyState != E_DEAD) {
+		enemyState = E_DEAD;
+		position.y -= 10;
+		down = true;
+	}
+	else {
+		--countFall;
+		if (countFall > 0) {
+			if (flip)
+				position.x += 9;
+			else
+				position.x -= 9;
+			--countFall;
+		}
+		else {
+			if (down) {
+				position.y += 10;
+				down = false;
+			}
+			ret = movements[E_DEAD].frames[1];
+			if (countFloor > 0) {
+				--countFloor;
+			}
+			else {
+				if (totalLife > 0) {
+					enemyState = E_IDLE;
+				}
+				else {
+					imDead = true;
+				}
+				countFall = 20;
+				countFloor = 5;
+			}
+		}
+	}
+	return ret;
+}
+
+bool Enemy::ReachPlayer() {
+	bool ret = false;
+	if (this->collider->collided)
+		for (unsigned int i = 0; i < this->collider->tCollided.size() && !ret; ++i)
+			if (this->collider->tCollided[i] == PLAYER)
+				ret = true;
+	return ret;
+}
+
+ColliderType Enemy::AttackMe()
+{
+	ColliderType ret = ENEMY;
+	if (this->collider->collided)
+		for (unsigned int i = 0; i < this->collider->tCollided.size() && ret == ENEMY; ++i)
+			if (this->collider->tCollided[i] != PLAYER)
+				ret = this->collider->tCollided[i];
+	return ret;
+}
