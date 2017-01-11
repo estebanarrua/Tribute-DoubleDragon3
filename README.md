@@ -7,15 +7,10 @@ To win you must kill a number of enemis, these enemies follow you. Only a few en
 You lose the game if the timer is ended, or you use all the coind and die.
 
 To play the game you must use the following keys:
-Player1:                  Player2:
-UP: W                     UP: UP_KEY
-DOWN: S                   DOWN: DOWN_KEY
-LEFT: A                   LEFT: LEFT_KEY
-RIGHT: D                  RIGHT: RIGTH_KEY
-PUNCH: F                  PUNCH: I
-JUMP: G                   JUMP: O
-KICK: H                   KICK: P
-START: START              START: K
+
+Player1: Move to up, down, left, rigth with W, S, A and D. Jump with G, kick with h and punch with F.
+
+Player2: Move to up, down, left, rigth with the movements keys. Jump with O, kick with P and punch with I. The start button is the K.
 
 In order to develop all this tribute game, I use a modular programming technique. You can see the code and test the game in [GitHub](https://github.com/estebanarrua/Tribute-DoubleDragon3) and a video demostation from [Youtube](https://youtu.be/nI-Og8l2CT4).
 
