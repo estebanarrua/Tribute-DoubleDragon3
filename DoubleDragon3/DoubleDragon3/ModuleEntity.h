@@ -12,7 +12,7 @@ class Enemy;
 enum eGameState
 {
 	GAMMING,
-	PAUSA,
+	PAUSE,
 	GAME_OVER,
 	WIN
 };
@@ -20,6 +20,7 @@ class ModuleEntity : public Module
 {
 private:
 	int maxEnemies[2];
+	int restOfEnemies;
 	
 public:
 	std::vector<Player*> players;

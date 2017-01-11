@@ -62,27 +62,43 @@ bool ModuleHub::Start()
 
 update_status ModuleHub::Update()
 {
-	App->fonts->BlitText(128, 20, fontText, "time ");
-	App->fonts->BlitNumber(168, 20, fontNumber, App->timer->GetGameTime(), 3);
-	App->fonts->BlitText(128, 28, fontText, "coins ");
-	App->fonts->BlitNumber(176, 28, fontNumber, App->entities->coins, 2);
-	if (App->entities->players[0]->IsEnabled()) {
-		App->fonts->BlitNumber(30, 15, fontLife[0],App->entities->players[0]->totalLife, 3);
-		App->fonts->BlitText(38, 40, fontText, "jimmy");
-		App->renderer->BlitWithOutCamera(gFaces, 78, 15, &faces[0]);
-	}
-	else {
-		App->fonts->BlitText(38, 20, fontText, "press");
-		App->fonts->BlitText(38, 28, fontText, "start");
-	}
-	if (App->entities->players[1]->IsEnabled()) {
-		App->fonts->BlitNumber(242, 15, fontLife[1], App->entities->players[1]->totalLife, 3);
-		App->fonts->BlitText(242, 40, fontText, "billy");
-		App->renderer->BlitWithOutCamera(gFaces, 217, 15, &faces[1]);
-	}
-	else {
-		App->fonts->BlitText(242, 20, fontText, "press");
-		App->fonts->BlitText(242, 28, fontText, "start");
+	switch (App->entities->gameState)
+	{
+	case GAMMING:
+		App->fonts->BlitText(128, 20, fontText, "time ");
+		App->fonts->BlitNumber(168, 20, fontNumber, App->timer->GetGameTime(), 3);
+		App->fonts->BlitText(128, 28, fontText, "coins ");
+		App->fonts->BlitNumber(176, 28, fontNumber, App->entities->coins, 2);
+		if (App->entities->players[0]->IsEnabled()) {
+			App->fonts->BlitNumber(30, 15, fontLife[0], App->entities->players[0]->totalLife, 3);
+			App->fonts->BlitText(38, 40, fontText, "jimmy");
+			App->renderer->BlitWithOutCamera(gFaces, 78, 15, &faces[0]);
+		}
+		else {
+			App->fonts->BlitText(38, 20, fontText, "press");
+			App->fonts->BlitText(38, 28, fontText, "start");
+		}
+		if (App->entities->players[1]->IsEnabled()) {
+			App->fonts->BlitNumber(242, 15, fontLife[1], App->entities->players[1]->totalLife, 3);
+			App->fonts->BlitText(242, 40, fontText, "billy");
+			App->renderer->BlitWithOutCamera(gFaces, 217, 15, &faces[1]);
+		}
+		else {
+			App->fonts->BlitText(242, 20, fontText, "press");
+			App->fonts->BlitText(242, 28, fontText, "start");
+		}
+		break;
+	case GAME_OVER:
+		App->fonts->BlitText(124, 20, fontText, "game over");
+		break;
+	case WIN:
+		App->fonts->BlitText(132, 20, fontText, "you win");
+		break;
+	case PAUSE:
+		App->fonts->BlitText(140, 20, fontText, "pause");
+		break;
+	default:
+		break;
 	}
 	return UPDATE_CONTINUE;
 }

@@ -50,9 +50,9 @@
   },
   "entitys": {
     "starts": [ 40, 14 ],
-    "time": 120,
+    "time": 180,
     "coins" :  15,
-    "maxEnemies": [ 3, 4],
+    "maxEnemies": [ 3, 4, 12],
     "player1": {
       "graphics": "Sprites/billy_jimmy.png",
       "position": [ 117, 127, 13 ],

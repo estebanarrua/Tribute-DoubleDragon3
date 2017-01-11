@@ -58,27 +58,28 @@ update_status ModuleRender::PreUpdate()
 	int speed = 3 * screenSize;
 	int xMax = 0;
 	int xMin = 1104;
+	if (App->entities->IsEnabled()) {
+		if (App->entities->players[0]->IsEnabled()) {
+			xMax = App->entities->players[0]->position.x;
+			xMin = App->entities->players[0]->position.x;
+		}
+		if (App->entities->players[1]->IsEnabled() && App->entities->players[1]->position.x > xMax) {
+			xMax = App->entities->players[1]->position.x;
+		}
+		if (App->entities->players[1]->IsEnabled() && App->entities->players[1]->position.x < xMin) {
+			xMin = App->entities->players[1]->position.x;
+		}
 
-	if (App->entities->players[0]->IsEnabled()) {
-		xMax = App->entities->players[0]->position.x;
-		xMin = App->entities->players[0]->position.x;
-	}
-	if (App->entities->players[1]->IsEnabled() && App->entities->players[1]->position.x > xMax) {
-		xMax = App->entities->players[1]->position.x;
-	}
-	if (App->entities->players[1]->IsEnabled() && App->entities->players[1]->position.x < xMin) {
-		xMin = App->entities->players[1]->position.x;
-	}
-
-	if (camera.x + xMax*screenSize >(screenWidth / 4) * 3 * screenSize) {
-		camera.x -= speed;
-		if (camera.x < (-1104 + screenWidth) * screenSize)
-			camera.x = (-1104 + screenWidth) * screenSize;
-	}
-	if (camera.x + xMin*screenSize < 27 * screenSize) {
-		camera.x += speed;
-		if (camera.x > 0)
-			camera.x = 0;
+		if (camera.x + xMax*screenSize >(screenWidth / 4) * 3 * screenSize) {
+			camera.x = ((screenWidth / 4) * 3 * screenSize) - xMax*screenSize;
+			if (camera.x < (-1104 + screenWidth) * screenSize)
+				camera.x = (-1104 + screenWidth) * screenSize;
+		}
+		if (camera.x + xMin*screenSize < 27 * screenSize) {
+			camera.x = 27 * screenSize - xMin*screenSize;
+			if (camera.x > 0)
+				camera.x = 0;
+		}
 	}
 
 	return UPDATE_CONTINUE;

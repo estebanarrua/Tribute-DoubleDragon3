@@ -1,4 +1,6 @@
 #include "Globals.h"
+#include "Application.h"
+#include "ModuleEntity.h"
 #include "ModuleTimer.h"
 #include "SDL/include/SDL.h"
 
@@ -20,8 +22,13 @@ bool ModuleTimer::Start()
 update_status ModuleTimer::Update()
 {
 	unsigned int aux = SDL_GetTicks();
-	if (gameTime > 0) {
-		gameTime -= (aux - lastTime);
+	if (App->entities->gameState == GAMMING) {
+		if (gameTime > 0) {
+			gameTime -= (aux - lastTime);
+		}
+		else {
+			gameTime = 0;
+		}
 	}
 	lastTime = aux;
 	return UPDATE_CONTINUE;

@@ -191,7 +191,8 @@ Frame Enemy::Punch()
 		++count;
 		if (count >= 5) {
 			enemyState = E_IDLE;
-			collider->to_delete = true;
+			if (collider != nullptr)
+				collider->to_delete = true;
 			collider = nullptr;
 		}
 	}
@@ -216,7 +217,8 @@ Frame Enemy::Kick()
 		++count;
 		if (count >= 5) {
 			enemyState = E_IDLE;
-			collider->to_delete = true;
+			if (collider != nullptr)
+				collider->to_delete = true;
 			collider = nullptr;
 		}
 			

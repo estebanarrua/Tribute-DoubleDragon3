@@ -255,10 +255,9 @@ Frame Player::Jump(eDirection d, ColliderType collision)
 				life -= 30;
 			}
 			position.y = yPosition;
-			if (collider != nullptr) {
+			if (collider != nullptr)
 				collider->to_delete = true;
-				collider = nullptr;
-			}
+			collider = nullptr;
 			return Dead();
 		}
 		else 
@@ -269,7 +268,7 @@ Frame Player::Jump(eDirection d, ColliderType collision)
 					xCol = position.x - movements[IDLE].GetCurrentFrame().rect.w - 9;
 				else
 					xCol = position.x + movements[IDLE].GetCurrentFrame().rect.w;
-				collider = App->collisions->AddCollider({ xCol,zPosition - 1,9,3 }, P_C_FLYKICK);
+				collider = App->collisions->AddCollider({ xCol,zPosition - 1,12,3 }, P_C_FLYKICK);
 			}
 			ChangeXPosition(xSpeed);
 			position.y += ySpeed;
@@ -280,10 +279,9 @@ Frame Player::Jump(eDirection d, ColliderType collision)
 				playerState = IDLE;
 				xSpeed = 0;
 				ySpeed = -3;
-				if (collider != nullptr) {
+				if (collider != nullptr) 
 					collider->to_delete = true;
-					collider = nullptr;
-				}
+				collider = nullptr;
 			}
 		}
 	}
@@ -308,7 +306,8 @@ Frame Player::Punch()
 		++count;
 		if (count >= 5) {
 			playerState = IDLE;
-			collider->to_delete = true;
+			if (collider != nullptr)
+				collider->to_delete = true;
 			collider = nullptr;
 		}
 	}
@@ -327,13 +326,14 @@ Frame Player::Kick()
 			xCol = position.x - movements[IDLE].GetCurrentFrame().rect.w - 6;
 		else
 			xCol = position.x + movements[IDLE].GetCurrentFrame().rect.w;
-		collider = App->collisions->AddCollider({ xCol,zPosition - 1,6,3 }, P_C_KICK);
+		collider = App->collisions->AddCollider({ xCol,zPosition - 1, 9,3 }, P_C_KICK);
 	}
 	else {
 		++count;
 		if (count >= 5) {
 			playerState = IDLE;
-			collider->to_delete = true;
+			if (collider != nullptr)
+				collider->to_delete = true;
 			collider = nullptr;
 		}
 	}

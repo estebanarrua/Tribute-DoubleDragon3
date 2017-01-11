@@ -13,6 +13,18 @@
 
 ModuleSceneInit::ModuleSceneInit(CONFIG_OBJECT config, bool start_enabled) : Module(config, start_enabled)
 {
+	
+}
+
+ModuleSceneInit::~ModuleSceneInit()
+{
+	CleanUp();
+}
+
+bool ModuleSceneInit::Start()
+{
+	LOG("Loading Init scene");
+
 	int segaCount = (int)CONFIG_OBJECT_NUMBER(config, "segaAnimationCount");
 	CONFIG_ARRAY aSegaAnimation = CONFIG_OBJECT_ARRAY(config, "segaAnimation");
 	Frame fAux;
@@ -72,16 +84,7 @@ ModuleSceneInit::ModuleSceneInit(CONFIG_OBJECT config, bool start_enabled) : Mod
 	CONFIG_ARRAY aStart = CONFIG_OBJECT_ARRAY(config, "starts");
 	starts[0] = (int)CONFIG_ARRAY_NUMBER(aStart, 0);
 	starts[1] = (int)CONFIG_ARRAY_NUMBER(aStart, 1);
-}
 
-ModuleSceneInit::~ModuleSceneInit()
-{
-	CleanUp();
-}
-
-bool ModuleSceneInit::Start()
-{
-	LOG("Loading Init scene");
 	segaGraphics = App->textures->Load(CONFIG_OBJECT_STRING(config, "segaGraphics"));
 	flyingedgeGraphics = App->textures->Load(CONFIG_OBJECT_STRING(config, "flyingedgeGraphics"));
 	initPageGraphics = App->textures->Load(CONFIG_OBJECT_STRING(config, "initPageGraphics"));
@@ -91,6 +94,8 @@ bool ModuleSceneInit::Start()
 	backgroundMaxWith = background.rect.w;
 	background.rect.w = App->window->screenWidth;
 	bigFontsPositionX = -App->window->screenWidth;
+	App->renderer->camera.x = 0;
+	App->renderer->camera.y = 0;
 	return true;
 }
 
@@ -161,5 +166,7 @@ bool ModuleSceneInit::CleanUp()
 	App->textures->Unload(segaGraphics);
 	App->textures->Unload(flyingedgeGraphics);
 	App->textures->Unload(initPageGraphics);
+	actualState = INIT_PAGE;
+
 	return true;
 }

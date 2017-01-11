@@ -58,6 +58,8 @@ void ModuleFonts :: BlitText(int x, int y, int f, const char* text) {
 }
 
 void ModuleFonts::BlitNumber(int x, int y, int f, int number, unsigned int digits) {
+	if (number < 0)
+		number = 0;
 	NumericFont* font = nullptr;
 	for (list<NumericFont*>::iterator it = nFonts.begin(); it != nFonts.cend() && font == nullptr; ++it)
 		if ((*it)->id == f)
