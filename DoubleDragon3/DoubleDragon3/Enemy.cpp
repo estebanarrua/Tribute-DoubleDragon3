@@ -58,32 +58,31 @@ update_status Enemy::Update()
 	static int speed = 3;
 	static int punch = 2;
 	static int wait = 5;
-
-	switch (enemyState)
-	{
-	case E_IDLE:
-		if (!collider->collided) {
-			enemyState = E_WALK;
-		}
-		else {
-			if (wait == 0) {
-				wait = 5;
-				if (punch > 0) {
-					draw = Punch();
-					--punch;
-				}
-				else {
-					draw = Kick();
-					punch = 2;
-				}
+	if (target != nullptr && target->IsEnabled()) {
+		switch (enemyState)
+		{
+		case E_IDLE:
+			if (!collider->collided) {
+				enemyState = E_WALK;
 			}
 			else {
-				--wait;
+				if (wait == 0) {
+					wait = 5;
+					if (punch > 0) {
+						draw = Punch();
+						--punch;
+					}
+					else {
+						draw = Kick();
+						punch = 2;
+					}
+				}
+				else {
+					--wait;
+				}
 			}
-		}
-		break;
-	case E_WALK:
-		if (target != nullptr) {
+			break;
+		case E_WALK:
 			if (collider->collided) {
 				enemyState = E_IDLE;
 			}
@@ -113,18 +112,17 @@ update_status Enemy::Update()
 					draw = movements[E_UP].GetCurrentFrame();
 				}
 			}
+			break;
+		case E_PUNCH:
+			draw = Punch();
+			break;
+		case E_KICK:
+			draw = Kick();
+			break;
+		default:
+			break;
 		}
-		break;
-	case E_PUNCH:
-		draw = Punch();
-		break;
-	case E_KICK:
-		draw = Kick();
-		break;
-	default:
-		break;
 	}
-
 	draw.flip ^= flip;
 	App->renderer->Blit(graphics, position.x, position.y, &draw, 1.0f);
 	int colX = position.x;

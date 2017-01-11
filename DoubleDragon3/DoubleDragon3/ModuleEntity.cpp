@@ -1,5 +1,7 @@
 #include "Globals.h"
+#include "Application.h"
 #include "ModuleEntity.h"
+#include "ModuleInput.h"
 #include "Player.h"
 #include "Enemy.h"
 
@@ -29,6 +31,10 @@ ModuleEntity::~ModuleEntity()
 bool ModuleEntity::Start()
 {
 	bool ret = true;
+	CONFIG_ARRAY aStart = CONFIG_OBJECT_ARRAY(config, "starts");
+	starts[0] = (int)CONFIG_ARRAY_NUMBER(aStart, 0);
+	starts[1] = (int)CONFIG_ARRAY_NUMBER(aStart, 1);
+
 	if (playerStart[0])
 		players[0]->Enable();
 	if (playerStart[1])
@@ -44,10 +50,21 @@ update_status ModuleEntity::PreUpdate()
 {
 	GenerateEnemies();
 	LeadEnemies();
+
+	if (App->input->GetKey(starts[0]) == KEY_DOWN)
+		if (!players[0]->IsEnabled()) 
+			players[0]->Enable();
+	if (App->input->GetKey(starts[1]) == KEY_DOWN)
+		if (!players[1]->IsEnabled())
+			players[1]->Enable();
+
 	entitiesZOrder.clear();
 	for (list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
-		if ((*it)->IsEnabled())
+		if ((*it)->IsEnabled()) {
+			(*it)->PreUpdate();
 			entitiesZOrder.push_back((*it));
+		}
+			
 	OrderByZ( 0, entitiesZOrder.size() - 1);
 
 	return UPDATE_CONTINUE;

@@ -4,6 +4,7 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
+#include "ModuleTimer.h"
 
 
 Player::Player(CONFIG_OBJECT config) : Entity(config)
@@ -53,7 +54,21 @@ bool Player::Start()
 	SDL_Rect colRect = {position.x, zPosition - 1, movements[IDLE].GetCurrentFrame().rect.w, 3 };
 	collider = App->collisions->AddCollider(colRect,PLAYER);
 
+	CONFIG_ARRAY aLifes = CONFIG_OBJECT_ARRAY(config, "lifes");
+	totalLife = (int)(CONFIG_ARRAY_NUMBER(aLifes, 0));
+	life = (int)(CONFIG_ARRAY_NUMBER(aLifes, 1));
+
+	imDead = false;
+	isUntouchable = true;
+	timeUntouchable = App->timer->lastTime;
 	return true;
+}
+
+update_status Player::PreUpdate() {
+	if (imDead) {
+		this->Disable();
+	}
+	return UPDATE_CONTINUE;
 }
 
 update_status Player::Update()
@@ -62,12 +77,21 @@ update_status Player::Update()
 	eDirection jDirection = NONE; //Jump direction.
 	static int speed = 3;
 	static int countWalk = 0;
+	static int invisivilityCount = 0;
+
+	unsigned int newTime = App->timer->lastTime;
+	if (isUntouchable) {
+		if (newTime - timeUntouchable > 5000) {
+			isUntouchable = false;
+			invisible = false;
+		}
+	}
 
 	switch (playerState)
 	{
 	case IDLE:
 	case WALK:
-		if (collider->collided && collider->tCollided != ENEMY) {
+		if (collider->collided && collider->tCollided != ENEMY && !isUntouchable) {
 			draw = ReciveHit();
 		}
 		else {
@@ -145,14 +169,25 @@ update_status Player::Update()
 	case DEAD:
 		draw = Dead();
 		break;
+	case STAND_UP:
+		draw = StandUp();
+		break;
 	default:
 		break;
 	}
 	
 	draw.flip ^= flip;
 
+	if (isUntouchable) {
+		++invisivilityCount;
+		if (invisivilityCount > 6) {
+			invisible =  !invisible;
+			invisivilityCount = 0;
+		}
+	}
 	
-	App->renderer->Blit(graphics, position.x, position.y, &draw, 1.0f);
+	if (!invisible) 
+		App->renderer->Blit(graphics, position.x, position.y, &draw, 1.0f);
 	int colX = position.x;
 	if (flip)
 		colX -= movements[IDLE].GetCurrentFrame().rect.w;
@@ -199,15 +234,30 @@ Frame Player::Jump(eDirection d)
 	}
 	else 
 	{
-		ChangeXPosition(xSpeed);
-		position.y += ySpeed;
-		if (position.y <= yPosition + maxCount * ySpeed)
-			ySpeed = 3;
-		if (position.y >= yPosition)
+		if (collider->collided && collider->tCollided != ENEMY && !isUntouchable) {
+			if (collider->tCollided == E_C_PUNCH) {
+				totalLife -= 20;
+				life -= 20;
+			}
+			else {
+				totalLife -= 30;
+				life -= 30;
+			}
+			position.y = yPosition;
+			return Dead();
+		}
+		else 
 		{
-			playerState = IDLE;
-			xSpeed = 0;
-			ySpeed = -3;
+			ChangeXPosition(xSpeed);
+			position.y += ySpeed;
+			if (position.y <= yPosition + maxCount * ySpeed)
+				ySpeed = 3;
+			if (position.y >= yPosition)
+			{
+				playerState = IDLE;
+				xSpeed = 0;
+				ySpeed = -3;
+			}
 		}
 	}
 	return movements[playerState].GetCurrentFrame();
@@ -216,14 +266,24 @@ Frame Player::Jump(eDirection d)
 Frame Player::Punch()
 {
 	static int count = 0;
+	static Collider* collider = nullptr;
 	if (playerState != PUNCH) {
 		playerState = PUNCH;
 		count = 0;
+		int xCol = 0;
+		if (flip)
+			xCol = position.x - movements[IDLE].GetCurrentFrame().rect.w - 3;
+		else
+			xCol = position.x + movements[IDLE].GetCurrentFrame().rect.w;
+		collider = App->collisions->AddCollider({ xCol,zPosition - 1,3,3 }, P_C_PUNCH);
 	}
 	else {
 		++count;
-		if (count >= 5 )
+		if (count >= 5) {
 			playerState = IDLE;
+			collider->to_delete = true;
+			collider = nullptr;
+		}
 	}
 	return movements[PUNCH].GetCurrentFrame();
 }
@@ -249,15 +309,24 @@ Frame Player::ReciveHit()
 	if (playerState != PUNCH_RECIVE && playerState != KICK_RECIVE) {
 		if (collider->tCollided == E_C_PUNCH) {
 			playerState = PUNCH_RECIVE;
+			totalLife -= 20;
+			life -= 20;
 		}
 		else {
 			playerState = KICK_RECIVE;
+			totalLife -= 30;
+			life -= 30;
 		}
 	}
 	else {
 		--count;
 		if (count == 0) {
-			playerState = DEAD;
+			if (life < 0) {
+				CONFIG_ARRAY aLifes = CONFIG_OBJECT_ARRAY(config, "lifes");
+				life = (int)(CONFIG_ARRAY_NUMBER(aLifes, 1));
+				playerState = DEAD;
+			}else
+				playerState = IDLE;
 			count = 5;
 		}
 	}
@@ -288,11 +357,28 @@ Frame Player::Dead()
 				--countFloor;
 			}
 			else {
-				playerState = IDLE;
+				if (totalLife > 0) {
+					playerState = STAND_UP;
+				}
+				else {
+					imDead = true;
+				}
 				countFall = 20;
 				countFloor = 5;
 			}
 		}
 	}
 	return ret;
+}
+
+Frame Player::StandUp() {
+	static int count = 10;
+	--count;
+	if (count == 0) {
+		count = 10;
+		playerState = IDLE;
+		isUntouchable = true;
+		timeUntouchable = App->timer->lastTime;
+	}
+	return movements[playerState].GetCurrentFrame();
 }

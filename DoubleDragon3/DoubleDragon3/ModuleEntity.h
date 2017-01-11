@@ -21,6 +21,7 @@ public:
 	std::list<Entity*> entities;
 	std::vector<Entity*> entitiesZOrder;
 	bool playerStart[2] = { false, false };
+	int starts[2];
 
 public:
 	ModuleEntity(CONFIG_OBJECT config, bool start_enabled = true);

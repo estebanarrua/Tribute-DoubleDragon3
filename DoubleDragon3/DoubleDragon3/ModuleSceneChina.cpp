@@ -61,5 +61,5 @@ bool ModuleSceneChina::CleanUp()
 	LOG("Unloading China scene");
 	App->textures->Unload(graphics);
 
-	return false;
+	return true;
 }

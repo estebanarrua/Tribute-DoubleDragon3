@@ -53,12 +53,17 @@ private:
 	vector<Animation> movements;
 	vector<int> keys;
 	eMovements playerState = IDLE;
-	
+	bool imDead = false;
+	bool isUntouchable = false;
+	bool invisible = false;
+	unsigned int timeUntouchable = 0;
+
 public:
 	Player(CONFIG_OBJECT config);
 	~Player();
 
 	bool Start();
+	update_status PreUpdate();
 	update_status Update();
 	bool CleanUp();
 
@@ -69,6 +74,7 @@ private:
 	Frame Kick();
 	Frame ReciveHit();
 	Frame Dead();
+	Frame StandUp();
 };
 
 #endif //PLAYER

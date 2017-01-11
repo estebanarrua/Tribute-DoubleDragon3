@@ -20,6 +20,8 @@ public:
 	bool flip; 
 	SDL_Texture* graphics = nullptr;
 	Collider* collider = nullptr;
+	int totalLife;
+	int life;
 
 public:
 	Entity(CONFIG_OBJECT config, bool active = false, bool flip = false) : config(config), active(active), flip(flip)
