@@ -6,4 +6,5 @@ You can choise between Billy or Jimmy to play, or you can play with a friend and
 To win you must kill a number of enemis, these enemies follow you. Only a few enemies can attack you in the same time. 
 You lose the game if the timer is ended, or you use all the coind and die.
 
-In order to develop all this tribute game, I use a modular programming technique. You can see the code and test the game in GitHub and a video demostation from Youtube.
+In order to develop all this tribute game, I use a modular programming technique. You can see the code and test the game in [GitHub](https://github.com/estebanarrua/Tribute-DoubleDragon3) and a video demostation from [Youtube](https://youtu.be/nI-Og8l2CT4).
+
