@@ -42,18 +42,8 @@ bool ModuleEntity::Start()
 
 update_status ModuleEntity::PreUpdate()
 {
-	int max = maxEnemies[0];
-	if (players[0]->IsEnabled() && players[1]->IsEnabled())
-		max = maxEnemies[1];
-	if (enemiesAlive < max) {
-		enemiesAlive++;
-		Entity* enemy = new Enemy(CONFIG_OBJECT_OBJECT(config, "enemy1"));
-		enemy->Enable();
-		enemy->position.x += players[0]->position.x;
-		enemy->position.y = players[0]->position.y;
-		enemy->zPosition = players[0]->zPosition;
-		entities.push_back(enemy);
-	}
+	GenerateEnemies();
+	LeadEnemies();
 	entitiesZOrder.clear();
 	for (list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
 		if ((*it)->IsEnabled())
@@ -83,6 +73,9 @@ bool ModuleEntity::CleanUp()
 	for (list<Entity*>::reverse_iterator it = entities.rbegin(); it != entities.rend() && ret; ++it)
 		ret = (*it)->CleanUp();
 	entities.clear();
+	entitiesZOrder.clear();
+	players.clear();
+	enemies.clear();
 
 	return ret;
 }
@@ -122,6 +115,41 @@ void ModuleEntity::OrderByZ( int pIni, int pEnd)
 			}
 		}
 	}
+}
+
+void ModuleEntity::GenerateEnemies()
+{
+	int max = maxEnemies[0];
+	if (players[0]->IsEnabled() && players[1]->IsEnabled())
+		max = maxEnemies[1];
+	if (enemiesAlive < max) {
+		enemiesAlive++;
+		Entity* enemy = new Enemy(CONFIG_OBJECT_OBJECT(config, "enemy1"));
+		enemy->Enable();
+		enemy->position.x += players[0]->position.x;
+		enemy->position.y = players[0]->position.y;
+		enemy->zPosition = players[0]->zPosition;
+		entities.push_back(enemy);
+		enemies.push_back((Enemy*)enemy);
+	}
+}
+
+void ModuleEntity::LeadEnemies()
+{
+	int i = 0;
+	for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); ++it) 
+		if ((*it)->IsEnabled()) {
+			if (players[i]->IsEnabled()) {
+				(*it)->target = players[i];
+				i = (i + 1) % 2;
+			}
+			else {
+				i = (i + 1) % 2;
+				if (players[i]->IsEnabled()) {
+					(*it)->target = players[i];
+				}
+			}
+		}
 }
 
 

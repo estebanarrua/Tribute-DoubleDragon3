@@ -3,6 +3,7 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
+#include "ModuleCollision.h"
 
 
 Player::Player(CONFIG_OBJECT config) : Entity(config)
@@ -49,6 +50,9 @@ bool Player::Start()
 
 	graphics = App->textures->Load(CONFIG_OBJECT_STRING(config, "graphics"));
 
+	SDL_Rect colRect = {position.x, zPosition - 1, movements[IDLE].GetCurrentFrame().rect.w, 3 };
+	collider = App->collisions->AddCollider(colRect,PLAYER);
+
 	return true;
 }
 
@@ -63,58 +67,61 @@ update_status Player::Update()
 	{
 	case IDLE:
 	case WALK:
-		if (App->input->GetKey(keys[K_LEFT]) == KEY_REPEAT)
-		{
-			playerState = WALK;
-			jDirection = LEFT;
-			draw = movements[WALK].GetCurrentFrame();
-			ChangeXPosition(-speed);
-			if (!flip)
-				position.x += draw.rect.w;
-			flip = true;
+		if (collider->collided && collider->tCollided != ENEMY) {
+			draw = ReciveHit();
 		}
-		if (App->input->GetKey(keys[K_RIGHT]) == KEY_REPEAT)
-		{
-			playerState = WALK;
-			jDirection = RIGHT;
-			ChangeXPosition(speed);
-			draw = movements[WALK].GetCurrentFrame();
-			if (flip)
-				position.x -= draw.rect.w;
-			flip = false;
-		}
-
-		if (App->input->GetKey(keys[K_UP]) == KEY_REPEAT)
-		{
-			playerState = WALK;
-			if (zPosition > 0) {
-				--zPosition;
-				position.y -= speed;
+		else {
+			if (App->input->GetKey(keys[K_LEFT]) == KEY_REPEAT)
+			{
+				playerState = WALK;
+				jDirection = LEFT;
+				draw = movements[WALK].GetCurrentFrame();
+				ChangeXPosition(-speed);
+				if (!flip)
+					position.x += draw.rect.w;
+				flip = true;
 			}
-			draw = movements[UP].GetCurrentFrame();
-		}
-
-		if (App->input->GetKey(keys[K_DOWN]) == KEY_REPEAT)
-		{
-			playerState = WALK;
-			if (zPosition < 25) {
-				++zPosition;
-				position.y += speed;
+			if (App->input->GetKey(keys[K_RIGHT]) == KEY_REPEAT)
+			{
+				playerState = WALK;
+				jDirection = RIGHT;
+				ChangeXPosition(speed);
+				draw = movements[WALK].GetCurrentFrame();
+				if (flip)
+					position.x -= draw.rect.w;
+				flip = false;
 			}
-			draw = movements[WALK].GetCurrentFrame();
-		}
+			if (App->input->GetKey(keys[K_UP]) == KEY_REPEAT)
+			{
+				playerState = WALK;
+				if (zPosition > 0) {
+					--zPosition;
+					position.y -= speed;
+				}
+				draw = movements[UP].GetCurrentFrame();
+			}
+			if (App->input->GetKey(keys[K_DOWN]) == KEY_REPEAT)
+			{
+				playerState = WALK;
+				if (zPosition < 25) {
+					++zPosition;
+					position.y += speed;
+				}
+				draw = movements[WALK].GetCurrentFrame();
+			}
 
-		if (App->input->GetKey(keys[K_B]) == KEY_DOWN)
-		{
-			draw = Jump(jDirection);
-		}
-		if (App->input->GetKey(keys[K_A]) == KEY_DOWN)
-		{
-			draw = Punch();
-		}
-		if (App->input->GetKey(keys[K_C]) == KEY_DOWN)
-		{
-			draw = Kick();
+			if (App->input->GetKey(keys[K_B]) == KEY_DOWN)
+			{
+				draw = Jump(jDirection);
+			}
+			if (App->input->GetKey(keys[K_A]) == KEY_DOWN)
+			{
+				draw = Punch();
+			}
+			if (App->input->GetKey(keys[K_C]) == KEY_DOWN)
+			{
+				draw = Kick();
+			}
 		}
 		break;
 	case JUMP:
@@ -131,13 +138,25 @@ update_status Player::Update()
 	case KICK:
 		draw = Kick();
 		break;
+	case PUNCH_RECIVE:
+	case KICK_RECIVE:
+		draw = ReciveHit();
+		break;
+	case DEAD:
+		draw = Dead();
+		break;
 	default:
 		break;
 	}
 	
 	draw.flip ^= flip;
 
+	
 	App->renderer->Blit(graphics, position.x, position.y, &draw, 1.0f);
+	int colX = position.x;
+	if (flip)
+		colX -= movements[IDLE].GetCurrentFrame().rect.w;
+	collider->SetPos(colX, zPosition - 1);
 
 	return UPDATE_CONTINUE;
 }
@@ -173,9 +192,9 @@ Frame Player::Jump(eDirection d)
 	if (playerState != JUMP && playerState != FLY_KICK) {
 		playerState = JUMP;
 		if(d == RIGHT)
-			xSpeed = 3;
+			xSpeed = 6;
 		if(d == LEFT)
-			xSpeed = -3;
+			xSpeed = -6;
 		yPosition = position.y;
 	}
 	else 
@@ -222,4 +241,58 @@ Frame Player::Kick()
 			playerState = IDLE;
 	}
 	return movements[KICK].GetCurrentFrame();
+}
+
+Frame Player::ReciveHit()
+{
+	static int count = 5;
+	if (playerState != PUNCH_RECIVE && playerState != KICK_RECIVE) {
+		if (collider->tCollided == E_C_PUNCH) {
+			playerState = PUNCH_RECIVE;
+		}
+		else {
+			playerState = KICK_RECIVE;
+		}
+	}
+	else {
+		--count;
+		if (count == 0) {
+			playerState = DEAD;
+			count = 5;
+		}
+	}
+	
+	return movements[playerState].GetCurrentFrame();
+}
+
+Frame Player::Dead()
+{
+	static int countFall = 20;
+	static int countFloor = 5;
+	Frame ret = movements[DEAD].frames[0];
+	if (playerState != DEAD) {
+		playerState = DEAD;
+	}
+	else {
+		--countFall;
+		if (countFall > 0) {
+			if (flip)
+				ChangeXPosition(9);
+			else
+				ChangeXPosition(-9);
+			--countFall;
+		}
+		else {
+			ret = movements[DEAD].frames[1];
+			if (countFloor > 0) {
+				--countFloor;
+			}
+			else {
+				playerState = IDLE;
+				countFall = 20;
+				countFloor = 5;
+			}
+		}
+	}
+	return ret;
 }

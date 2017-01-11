@@ -38,7 +38,7 @@
   },
   "entitys": {
     "start": [ 40, 14 ],
-    "maxEnemies": [ 3, 4],
+    "maxEnemies": [ 1, 4],
     "player1": {
       "graphics": "Sprites/billy_jimmy.png",
       "position": [ 117, 127, 13 ],
@@ -56,15 +56,6 @@
             [ 112, 0, 26, 62, false ]
           ],
           "speed": 0.2
-        },
-        {
-          "animations": [
-            [ 8, 2, 27, 61, false ],
-            [ 48, 1, 25, 62, false ],
-            [ 80, 1, 26, 61, false ],
-            [ 112, 0, 26, 62, false ]
-          ],
-          "speed": 0.5
         },
         {
           "animations": [
@@ -98,6 +89,25 @@
         {
           "animations": [ [ 288, 101, 46, 42, false ] ],
           "speed": 0.0
+        },
+        {
+          "animations": [ [ 8, 392, 25, 63, false ] ],
+          "speed": 0.0
+        },
+        {
+          "animations": [ [ 40, 392, 25, 63, false ] ],
+          "speed": 0.0
+        },
+        {
+          "animations": [
+            [ 72, 408, 46, 47, false ],
+            [ 128, 395, 61, 60, false ]
+          ],
+          "speed": 0.0
+        },
+        {
+          "animations": [ [ 200, 395, 21, 60, false ] ],
+          "speed": 0.0
         }
       ]
     },
@@ -118,15 +128,6 @@
             [ 112, 464, 26, 62, false ]
           ],
           "speed": 0.2
-        },
-        {
-          "animations": [
-            [ 8, 466, 27, 61, false ],
-            [ 48, 465, 25, 62, false ],
-            [ 80, 465, 26, 61, false ],
-            [ 112, 464, 26, 62, false ]
-          ],
-          "speed": 0.5
         },
         {
           "animations": [
@@ -160,6 +161,25 @@
         {
           "animations": [ [ 288, 565, 46, 42, false ] ],
           "speed": 0.0
+        },
+        {
+          "animations": [ [ 8, 856, 25, 63, false ] ],
+          "speed": 0.0
+        },
+        {
+          "animations": [ [ 40, 856, 25, 63, false ] ],
+          "speed": 0.0
+        },
+        {
+          "animations": [
+            [ 72, 872, 46, 47, false ],
+            [ 128, 859, 61, 60, false ]
+          ],
+          "speed": 0.0
+        },
+        {
+          "animations": [ [ 200, 859, 21, 60, false ] ],
+          "speed": 0.0
         }
       ]
     },
@@ -192,14 +212,16 @@
         {
           "animations": [
             [ 8, 79, 31, 61, false ],
-            [ 48, 84, 35, 56, false ]
+            [ 48, 84, 35, 56, false ],
+            [ 8, 79, 31, 61, false ]
           ],
           "speed": 0.2
         },
         {
           "animations": [
             [ 96, 85, 28, 55, false ],
-            [ 136, 80, 35, 60, false ]
+            [ 136, 80, 35, 60, false ],
+            [ 96, 85, 28, 55, false ]
           ],
           "speed": 0.5
         } 

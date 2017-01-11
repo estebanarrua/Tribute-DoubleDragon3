@@ -6,6 +6,8 @@
 
 struct SDL_Texture;
 
+class Collider;
+
 class Entity
 {
 
@@ -17,6 +19,7 @@ public:
 	int zPosition = 0;
 	bool flip; 
 	SDL_Texture* graphics = nullptr;
+	Collider* collider = nullptr;
 
 public:
 	Entity(CONFIG_OBJECT config, bool active = false, bool flip = false) : config(config), active(active), flip(flip)

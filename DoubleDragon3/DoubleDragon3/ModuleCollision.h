@@ -8,13 +8,21 @@ enum ColliderType
 {
 	PLAYER,
 	ENEMY,
-	P_HIT,
-	E_HIT,
+	P_C_PUNCH,
+	E_C_PUNCH,
+	P_C_KICK,
+	E_C_KICK,
 
 	MAX_COLAIDERS
 };
-
-const bool ColliderMatrix[MAX_COLAIDERS][MAX_COLAIDERS] = { {false,false,false,true}, {false,false,true,false}, {false,true,false,false} ,{true,false,false,false} };
+															/*PLAYER  ENEMY  P_PUNCH  E_PUNCH  P_KICK  E_KICK  */
+const bool ColliderMatrix[MAX_COLAIDERS][MAX_COLAIDERS] = { { false,  true,  false,   true,    false,  true },      //PLAYER
+															{ true,   false, true,    false,   true,   false},		//ENEMY
+															{ false,  true,  false,   false,   false,  false},		//P_PUNCH
+															{ true,   false, false,   false,   false,  false},		//E_PUNCH
+															{ false,  true,  false,   false,   false,  false},		//P_KICK
+															{ true,   false, false,   false,   false,  false}};	//E_KICK
+															
 
 struct Collider
 {
@@ -22,9 +30,10 @@ struct Collider
 	ColliderType type;
 	bool to_delete = false;
 	bool collided = false;
+	ColliderType tCollided;
 	
 	Collider(SDL_Rect rectangle, ColliderType type) : // expand this call if you need to
-		rect(rectangle), type(type)
+		rect(rectangle), type(type), tCollided(type)
 	{}
 
 	void SetPos(int x, int y)
@@ -54,7 +63,7 @@ public:
 	bool CleanUp();
 
 	Collider* AddCollider(const SDL_Rect& rect, ColliderType type);
-	//void DebugDraw();
+	void DebugDraw();
 
 };
 

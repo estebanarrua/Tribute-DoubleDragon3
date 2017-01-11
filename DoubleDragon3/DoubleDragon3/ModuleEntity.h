@@ -7,6 +7,7 @@
 #include "Entity.h"
 
 class Player;
+class Enemy;
 
 class ModuleEntity : public Module
 {
@@ -16,6 +17,7 @@ private:
 	
 public:
 	std::vector<Player*> players;
+	std::list<Enemy*> enemies;
 	std::list<Entity*> entities;
 	std::vector<Entity*> entitiesZOrder;
 	bool playerStart[2] = { false, false };
@@ -31,6 +33,8 @@ public:
 
 private:
 	void OrderByZ( int pIni, int pEnd);
+	void GenerateEnemies();
+	void LeadEnemies();
 };
 
 #endif //MODULEENTITY
