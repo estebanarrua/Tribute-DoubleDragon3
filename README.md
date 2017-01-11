@@ -1,37 +1,9 @@
-## Welcome to GitHub Pages
+I recently developed a tribute of the game Double Dragon 3 - The Rosetta Stone in C++ with SDL for the master Video Game Design and Development in the Univercidad Politecnica de Cataluña.
 
-You can use the [editor on GitHub](https://github.com/estebanarrua/Tribute-DoubleDragon3/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+In this game you can play in the level 3 of the original game, and figth with a type of the originals enemis. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+You can choise between Billy or Jimmy to play, or you can play with a friend and use both. 
+To win you must kill a number of enemis, these enemies follow you. Only a few enemies can attack you in the same time. 
+You lose the game if the timer is ended, or you use all the coind and die.
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/estebanarrua/Tribute-DoubleDragon3/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+In order to develop all this tribute game, I use a modular programming technique. You can see the code and test the game in GitHub and a video demostation from Youtube.
