@@ -19,12 +19,26 @@ bool ModuleTimer::Start()
 
 update_status ModuleTimer::Update()
 {
-	lastTime = SDL_GetTicks();
+	unsigned int aux = SDL_GetTicks();
+	if (gameTime > 0) {
+		gameTime -= (aux - lastTime);
+	}
+	lastTime = aux;
 	return UPDATE_CONTINUE;
 }
 
 bool ModuleTimer::CleanUp()
 {
 	return true;
+}
+
+int ModuleTimer::GetGameTime()
+{
+	return gameTime/1000;
+}
+
+void ModuleTimer::StartGameTime(int gameTime)
+{
+	this->gameTime = gameTime * 1000;
 }
 

@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleEntity.h"
 #include "ModuleInput.h"
+#include "ModuleTimer.h"
 #include "Player.h"
 #include "Enemy.h"
 
@@ -42,51 +43,59 @@ bool ModuleEntity::Start()
 		players[0]->Enable();
 	if (playerStart[1])
 		players[1]->Enable();
+	App->timer->StartGameTime((int) CONFIG_OBJECT_NUMBER(config, "time"));
+	coins = (int)CONFIG_OBJECT_NUMBER(config, "coins");
+	gameState = GAMMING;
 
 	return ret;
 }
 
 update_status ModuleEntity::PreUpdate()
 {
-	GenerateEnemies();
-	LeadEnemies();
+		GenerateEnemies();
+		LeadEnemies();
 
-	if (App->input->GetKey(starts[0]) == KEY_DOWN)
-		if (!players[0]->IsEnabled()) 
-			players[0]->Enable();
-	if (App->input->GetKey(starts[1]) == KEY_DOWN)
-		if (!players[1]->IsEnabled())
-			players[1]->Enable();
-
-	entitiesZOrder.clear();
-
-	for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end();) {
-		if ((*it)->to_delete == true)
-		{
-			it = enemies.erase(it);
-		}
-		else {
-			++it;
-		}
-	}
-
-	for (list<Entity*>::iterator it = entities.begin(); it != entities.end();)
-	{
-		if ((*it)->to_delete == true)
-		{
-			RELEASE(*it);
-			it = entities.erase(it);
-		}
-		else {
-			if ((*it)->IsEnabled()) {
-				(*it)->PreUpdate();
-				entitiesZOrder.push_back((*it));
+		if (App->input->GetKey(starts[0]) == KEY_DOWN)
+			if (!players[0]->IsEnabled()) {
+				App->timer->StartGameTime((int)CONFIG_OBJECT_NUMBER(config, "time"));
+				players[0]->Enable();
 			}
-			++it;
+
+		if (App->input->GetKey(starts[1]) == KEY_DOWN)
+			if (!players[1]->IsEnabled()) {
+				App->timer->StartGameTime((int)CONFIG_OBJECT_NUMBER(config, "time"));
+				players[1]->Enable();
+			}
+
+		entitiesZOrder.clear();
+
+		for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end();) {
+			if ((*it)->to_delete == true)
+			{
+				it = enemies.erase(it);
+			}
+			else {
+				++it;
+			}
 		}
-	}
-			
-	OrderByZ( 0, entitiesZOrder.size() - 1);
+
+		for (list<Entity*>::iterator it = entities.begin(); it != entities.end();)
+		{
+			if ((*it)->to_delete == true)
+			{
+				RELEASE(*it);
+				it = entities.erase(it);
+			}
+			else {
+				if ((*it)->IsEnabled()) {
+					(*it)->PreUpdate();
+					entitiesZOrder.push_back((*it));
+				}
+				++it;
+			}
+		}
+
+		OrderByZ(0, entitiesZOrder.size() - 1);
 
 	return UPDATE_CONTINUE;
 }
@@ -104,11 +113,11 @@ update_status ModuleEntity::Update()
 
 update_status ModuleEntity::PostUpdate() {
 	update_status ret = UPDATE_CONTINUE;
-
+	
 	for (list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UPDATE_CONTINUE; ++it)
 		if ((*it)->IsEnabled())
 			ret = (*it)->PostUpdate();
-
+	
 	return ret;
 }
 

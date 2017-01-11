@@ -185,7 +185,7 @@ update_status Player::Update()
 
 	if (isUntouchable) {
 		++invisivilityCount;
-		if (invisivilityCount > 6) {
+		if (invisivilityCount > 4) {
 			invisible =  !invisible;
 			invisivilityCount = 0;
 		}

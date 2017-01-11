@@ -242,7 +242,7 @@ Frame Enemy::ReciveHit(ColliderType collision)
 	}
 	else {
 		--count;
-		if (count == 0) {
+		if (count <= 0) {
 			if (totalLife <= 0)
 				return Dead();
 			else {
@@ -268,9 +268,9 @@ Frame Enemy::Dead()
 		--countFall;
 		if (countFall > 0) {
 			if (flip)
-				position.x += 9;
+				position.x += 7;
 			else
-				position.x -= 9;
+				position.x -= 7;
 			--countFall;
 		}
 		else {

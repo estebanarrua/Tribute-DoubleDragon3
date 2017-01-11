@@ -7,6 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleEntity.h"
+#include "ModuleHub.h"
 #include "SDL/include/SDL.h"
 
 
@@ -38,6 +39,8 @@ bool ModuleSceneChina::Start()
 	App->audio->PlayMusic("Music/03-in-china.ogg");
 
 	App->entities->Enable();
+
+	App->hub->Enable();
 
 	return true;
 }

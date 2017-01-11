@@ -9,6 +9,13 @@
 class Player;
 class Enemy;
 
+enum eGameState
+{
+	GAMMING,
+	PAUSA,
+	GAME_OVER,
+	WIN
+};
 class ModuleEntity : public Module
 {
 private:
@@ -21,6 +28,8 @@ public:
 	std::vector<Entity*> entitiesZOrder;
 	bool playerStart[2] = { false, false };
 	int starts[2];
+	int coins = 0;
+	eGameState gameState = GAMMING;
 
 public:
 	ModuleEntity(CONFIG_OBJECT config, bool start_enabled = true);

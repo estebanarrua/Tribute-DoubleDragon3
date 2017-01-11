@@ -10,6 +10,9 @@
   "fonts": {
   },
   "hub": {
+    "faces": "Sprites/faces.png",
+    "facesRect1": [ 0, 0, 25, 25],
+    "facesRect2": [ 0, 128, 25, 25],
     "texture": "Sprites/fonts.png",
     "textStr": " 0123456789abcdefghijklmnopqrstuvwxyz?!\"#$%&'()*+,-./",
     "textRect": [ 0, 0, 8, 8 ],
@@ -47,6 +50,8 @@
   },
   "entitys": {
     "starts": [ 40, 14 ],
+    "time": 120,
+    "coins" :  15,
     "maxEnemies": [ 3, 4],
     "player1": {
       "graphics": "Sprites/billy_jimmy.png",

@@ -51,7 +51,7 @@ void ModuleFonts :: BlitText(int x, int y, int f, const char* text) {
 			
 		Frame faux = font->origin;
 		faux.rect.x += (font->origin.rect.w * i);
-		App->renderer->Blit(font->graphics, x , y, &(faux));
+		App->renderer->BlitWithOutCamera(font->graphics, x , y, &(faux));
 		x += font->origin.rect.w;
 		++text;
 	}
@@ -75,7 +75,7 @@ void ModuleFonts::BlitNumber(int x, int y, int f, int number, unsigned int digit
 	for (vector<int>::const_reverse_iterator it = vect.crbegin(); it != vect.crend(); ++it) {
 		Frame faux = font->origin;
 		faux.rect.x += (font->origin.rect.w * (*it));
-		App->renderer->Blit(font->graphics, x, y, &(faux));
+		App->renderer->BlitWithOutCamera(font->graphics, x, y, &(faux));
 		x += font->origin.rect.w;
 	}
 }
