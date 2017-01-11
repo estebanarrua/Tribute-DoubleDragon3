@@ -1,5 +1,5 @@
-#ifndef __ModuleCollision_H__
-#define __ModuleCollision_H__
+#ifndef __MODULECOLLISION_H__
+#define __MODULECOLLISION_H__
 
 #include<list>
 #include<vector>
@@ -71,4 +71,4 @@ public:
 
 };
 
-#endif // __ModuleCollision_H__
+#endif // __MODULECOLLISION_H__

@@ -154,6 +154,8 @@
     <ClCompile Include="ModuleCollision.cpp" />
     <ClCompile Include="ModuleEntity.cpp" />
     <ClCompile Include="ModuleFadeToBlack.cpp" />
+    <ClCompile Include="ModuleFonts.cpp" />
+    <ClCompile Include="ModuleHub.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleSceneChina.cpp" />
@@ -176,6 +178,8 @@
     <ClInclude Include="ModuleCollision.h" />
     <ClInclude Include="ModuleEntity.h" />
     <ClInclude Include="ModuleFadeToBlack.h" />
+    <ClInclude Include="ModuleFonts.h" />
+    <ClInclude Include="ModuleHub.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleSceneChina.h" />

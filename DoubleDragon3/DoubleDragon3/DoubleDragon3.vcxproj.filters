@@ -78,6 +78,12 @@
     <ClCompile Include="ModuleCollision.cpp">
       <Filter>Modules\Source code files</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleFonts.cpp">
+      <Filter>Modules\Source code files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleHub.cpp">
+      <Filter>Modules\Source code files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -141,6 +147,12 @@
       <Filter>Modules\Header files</Filter>
     </ClInclude>
     <ClInclude Include="ModuleCollision.h">
+      <Filter>Modules\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFonts.h">
+      <Filter>Modules\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleHub.h">
       <Filter>Modules\Header files</Filter>
     </ClInclude>
   </ItemGroup>

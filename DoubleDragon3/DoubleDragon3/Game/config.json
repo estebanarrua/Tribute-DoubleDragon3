@@ -7,6 +7,15 @@
     "screen_size": [ 320, 224, 4 ],
     "fullscreen": false
   },
+  "fonts": {
+  },
+  "hub": {
+    "texture": "Sprites/fonts.png",
+    "textStr": " 0123456789abcdefghijklmnopqrstuvwxyz?!\"#$%&'()*+,-./",
+    "textRect": [ 0, 0, 8, 8 ],
+    "numbP1": [ 0, 40, 16, 23 ],
+    "numbP2": [ 0, 64, 16, 23 ]
+  },
   "render": {
     "screen_size": [ 320, 224, 4 ],
     "vsync": true
@@ -38,7 +47,7 @@
   },
   "entitys": {
     "starts": [ 40, 14 ],
-    "maxEnemies": [ 1, 4],
+    "maxEnemies": [ 3, 4],
     "player1": {
       "graphics": "Sprites/billy_jimmy.png",
       "position": [ 117, 127, 13 ],

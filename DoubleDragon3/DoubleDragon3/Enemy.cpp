@@ -61,21 +61,25 @@ update_status Enemy::Update()
 	Frame draw = movements[E_IDLE].GetCurrentFrame();
 	static int speed = 3;
 	static int punch = 2;
-	static int wait = 5;
+	static int wait = 10;
 	if (target != nullptr && target->IsEnabled()) {
-		ColliderType collision = AttackMe();
+		
+		ColliderType collision = ENEMY;
+		if (enemyState < E_PUNCH_RECIVE)
+			collision = AttackMe();
 
 		switch (enemyState)
 		{
 		case E_IDLE:
 			if (collision != ENEMY) {
-				draw = ReciveHit(collision);
-			}else if (!ReachPlayer()) {
+					draw = ReciveHit(collision);
+				}
+			else if (!ReachPlayer()) {
 				enemyState = E_WALK;
 			}
 			else {
-				/*if (wait == 0) {
-					wait = 5;
+				if (wait == 0) {
+					wait = 10;
 					if (punch > 0) {
 						draw = Punch();
 						--punch;
@@ -87,7 +91,7 @@ update_status Enemy::Update()
 				}
 				else {
 					--wait;
-				}*/
+				}
 			}
 			break;
 		case E_WALK:
@@ -239,11 +243,11 @@ Frame Enemy::ReciveHit(ColliderType collision)
 	else {
 		--count;
 		if (count == 0) {
-			if (totalLife <= 0) {
-				enemyState = E_DEAD;
-			}
-			else
+			if (totalLife <= 0)
+				return Dead();
+			else {
 				enemyState = E_IDLE;
+			}
 			count = 5;
 		}
 	}
@@ -259,8 +263,6 @@ Frame Enemy::Dead()
 	Frame ret = movements[E_DEAD].frames[0];
 	if (enemyState != E_DEAD) {
 		enemyState = E_DEAD;
-		position.y -= 10;
-		down = true;
 	}
 	else {
 		--countFall;
@@ -272,10 +274,6 @@ Frame Enemy::Dead()
 			--countFall;
 		}
 		else {
-			if (down) {
-				position.y += 10;
-				down = false;
-			}
 			ret = movements[E_DEAD].frames[1];
 			if (countFloor > 0) {
 				--countFloor;

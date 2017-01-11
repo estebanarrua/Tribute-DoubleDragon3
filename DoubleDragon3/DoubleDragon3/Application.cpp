@@ -10,6 +10,8 @@
 #include "ModuleEntity.h"
 #include "ModuleTimer.h"
 #include "ModuleCollision.h"
+#include "ModuleFonts.h"
+#include "ModuleHub.h"
 
 using namespace std;
 
@@ -22,6 +24,7 @@ Application::Application()
 	modules.push_back(input = new ModuleInput(CONFIG_OBJECT_OBJECT(configObj, "input")));
 	modules.push_back(window = new ModuleWindow(CONFIG_OBJECT_OBJECT(configObj, "window")));
 	modules.push_back(timer = new ModuleTimer(CONFIG_OBJECT_OBJECT(configObj, "timer")));
+	modules.push_back(fonts = new ModuleFonts(CONFIG_OBJECT_OBJECT(configObj, "fonts")));
 	
 	modules.push_back(renderer = new ModuleRender(CONFIG_OBJECT_OBJECT(configObj, "render")));
 	modules.push_back(textures = new ModuleTextures(CONFIG_OBJECT_OBJECT(configObj, "textures")));
@@ -33,6 +36,7 @@ Application::Application()
 	modules.push_back(entities = new ModuleEntity(CONFIG_OBJECT_OBJECT(configObj, "entitys"), false));
 	modules.push_back(scene_china = new ModuleSceneChina(CONFIG_OBJECT_OBJECT(configObj, "sceneChina"), false));
 	modules.push_back(fade = new ModuleFadeToBlack(CONFIG_OBJECT_OBJECT(configObj, "fadeToBlack")));
+	modules.push_back(hub = new ModuleHub(CONFIG_OBJECT_OBJECT(configObj, "hub"), false));
 }
 
 Application::~Application()

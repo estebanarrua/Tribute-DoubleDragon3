@@ -16,6 +16,8 @@ class ModuleEntity;
 class ModuleSceneChina;
 class ModuleSceneInit;
 class ModuleCollision;
+class ModuleFonts;
+class ModuleHub;
 
 class Application
 {
@@ -37,6 +39,8 @@ public:
 	ModuleSceneChina* scene_china;
 	ModuleSceneInit* scene_init;
 	ModuleCollision* collisions;
+	ModuleFonts* fonts;
+	ModuleHub* hub;
 
 public:
 

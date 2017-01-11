@@ -87,7 +87,9 @@ update_status Player::Update()
 		}
 	}
 	
-	ColliderType collision = AttackMe();
+	ColliderType collision = PLAYER;
+	if(playerState < PUNCH_RECIVE)
+		collision = AttackMe();
 
 	switch (playerState)
 	{
